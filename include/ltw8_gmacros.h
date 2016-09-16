@@ -1,4 +1,4 @@
-// ltw8_gtypes.h: gtypes/gerror header for the ltw8 UTF-8 library.
+// ltw8_gmacros.h: gmacros header for the ltw8 UTF-8 library.
 // New code copyright (c) Chris White, 2016.
 
 #ifndef LTW8_GMACROS_H_
@@ -34,10 +34,10 @@
  * not refer to variables from glibconfig.h
  */
 
-#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
-#ifndef __G_MACROS_H__
-#define __G_MACROS_H__
+//#ifndef __G_MACROS_H__
+//#define __G_MACROS_H__
 
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
 #error "Only <glib.h> can be included directly."
 #endif
@@ -477,9 +477,7 @@
 /* no declaration of g_auto() or g_autoptr() here */
 #endif
 
-#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
-#endif /* __G_MACROS_H__ */
-#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+//#endif /* __G_MACROS_H__ */
 
 // end from glib/glib/gmacros.h
 

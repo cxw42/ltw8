@@ -5,6 +5,8 @@
 #ifndef LTW8_UNICODE_H_
 #define LTW8_UNICODE_H_
 
+#include "ltw8_gmacros.h"
+
 /* Copyright (C) 2002 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -26,27 +28,27 @@
 _DEFS(glibmm,glib)
 
 //#m4begin
-_PUSH()
-
-// m4 helper macros to generate the character-class inline functions.
-
-m4_define(`_UNICHAR_FUNC',`dnl
-inline $1 $2(gunichar uc)
-  { return g_unichar_$2(uc); }
-`'dnl`'')
-
-//MSVC++ needs the != 0 to avoid an int -> bool cast warning.
-m4_define(`_UNICHAR_FUNC_BOOL',`dnl
-inline $1 $2(gunichar uc)
-  { return (g_unichar_$2(uc) != 0); }
-`'dnl`'')
-
-m4_define(`_ASCII_FUNC',`dnl
-inline $1 $2(char c)
-  { return g_ascii_$2(c); }
-`'dnl`'')
-
-_POP()
+//_PUSH()
+//
+//// m4 helper macros to generate the character-class inline functions.
+//
+//m4_define(`_UNICHAR_FUNC',`dnl
+//inline $1 $2(gunichar uc)
+//  { return g_unichar_$2(uc); }
+//`'dnl`'')
+//
+////MSVC++ needs the != 0 to avoid an int -> bool cast warning.
+//m4_define(`_UNICHAR_FUNC_BOOL',`dnl
+//inline $1 $2(gunichar uc)
+//  { return (g_unichar_$2(uc) != 0); }
+//`'dnl`'')
+//
+//m4_define(`_ASCII_FUNC',`dnl
+//inline $1 $2(char c)
+//  { return g_ascii_$2(c); }
+//`'dnl`'')
+//
+//_POP()
 //#m4end
 
 #include <glib.h>

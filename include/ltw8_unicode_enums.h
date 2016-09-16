@@ -4,6 +4,9 @@
 #ifndef LTW8_UNICODE_ENUMS_
 #define LTW8_UNICODE_ENUMS_
 
+#define GLIB_DEPRECATED_IN_2_30
+#define GLIB_AVAILABLE_IN_2_30
+
 #ifndef NAMESPACE_LTW8_
 namespace ltw8
 {
@@ -31,10 +34,11 @@ namespace ltw8
  * see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
-#ifndef __G_UNICODE_H__
-#define __G_UNICODE_H__
 
+//#ifndef __G_UNICODE_H__
+//#define __G_UNICODE_H__
+
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
 #error "Only <glib.h> can be included directly."
 #endif
@@ -42,11 +46,12 @@ namespace ltw8
 #include <glib/gerror.h>
 #include <glib/gtypes.h>
 
-G_BEGIN_DECLS
-
 #else
 #include "ltw8_gtypes.h"
 #endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+
+G_BEGIN_DECLS
+
 
 /**
  * gunichar:
@@ -887,11 +892,9 @@ gchar *g_utf8_collate_key_for_filename (const gchar *str,
 /* private */
 gchar *_g_utf8_make_valid (const gchar *name);
 
-#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 G_END_DECLS
 
-#endif /* __G_UNICODE_H__ */
-#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+//#endif /* __G_UNICODE_H__ */
 
 // end from glib/glib/gunicode.h
 

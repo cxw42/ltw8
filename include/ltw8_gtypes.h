@@ -1,8 +1,11 @@
-// ltw8_gtypes.h: gtypes/gerror header for the ltw8 UTF-8 library.
+// ltw8_gtypes.h: gtypes/gerror/gquark header for the ltw8 UTF-8 library.
 // New code copyright (c) Chris White, 2016.
 
 #ifndef LTW8_GTYPES_H_
 #define LTW8_GTYPES_H_
+
+#define GLIB_AVAILABLE_IN_ALL
+
 
 // from glib/glib/gtypes.h
 
@@ -30,10 +33,10 @@
  * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
-#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
-#ifndef __G_TYPES_H__
-#define __G_TYPES_H__
+//#ifndef __G_TYPES_H__
+//#define __G_TYPES_H__
 
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
 #error "Only <glib.h> can be included directly."
 #endif
@@ -43,11 +46,13 @@
 #include <glib/gversionmacros.h>
 #include <time.h>
 
-G_BEGIN_DECLS
-#else
+#else //ltw8
 #include "ltw8_gmacros.h"
+#include "ltw8_glibconfig.h"
 #include <time.h>
 #endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+
+G_BEGIN_DECLS
 
 /* Provide type definitions for commonly used types.
  *  These are useful because a "gint8" can be adjusted
@@ -548,10 +553,215 @@ G_END_DECLS
 #  endif /* !G_PLATFORM_WIN32 */
 #endif /* GLIB_VAR */
 
-#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
-#endif /* __G_TYPES_H__ */
-#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+//#endif /* __G_TYPES_H__ */
 // end from glib/glib/gtypes.h
+
+///////////////////////////////////////////////////////////////////////////
+
+// from glib/glib/gquark.h
+
+/* GLIB - Library of useful routines for C programming
+ * Copyright (C) 1995-1997  Peter Mattis, Spencer Kimball and Josh MacDonald
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+ */
+
+/*
+ * Modified by the GLib Team and others 1997-2000.  See the AUTHORS
+ * file for a list of people on the GLib Team.  See the ChangeLog
+ * files for a list of changes.  These files are distributed with
+ * GLib at ftp://ftp.gtk.org/pub/gtk/.
+ */
+
+//#ifndef __G_QUARK_H__
+//#define __G_QUARK_H__
+
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+#if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
+#error "Only <glib.h> can be included directly."
+#endif
+
+#include <glib/gtypes.h>
+#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+
+G_BEGIN_DECLS
+
+typedef guint32 GQuark;
+
+/* Quarks (string<->id association)
+ */
+GLIB_AVAILABLE_IN_ALL
+GQuark                g_quark_try_string         (const gchar *string);
+GLIB_AVAILABLE_IN_ALL
+GQuark                g_quark_from_static_string (const gchar *string);
+GLIB_AVAILABLE_IN_ALL
+GQuark                g_quark_from_string        (const gchar *string);
+GLIB_AVAILABLE_IN_ALL
+const gchar *         g_quark_to_string          (GQuark       quark) G_GNUC_CONST;
+
+#define G_DEFINE_QUARK(QN, q_n)                                         \
+GQuark                                                                  \
+q_n##_quark (void)                                                      \
+{                                                                       \
+  static GQuark q;                                                      \
+                                                                        \
+  if G_UNLIKELY (q == 0)                                                \
+    q = g_quark_from_static_string (#QN);                               \
+                                                                        \
+  return q;                                                             \
+}
+
+GLIB_AVAILABLE_IN_ALL
+const gchar *         g_intern_string            (const gchar *string);
+GLIB_AVAILABLE_IN_ALL
+const gchar *         g_intern_static_string     (const gchar *string);
+
+G_END_DECLS
+
+//#endif /* __G_QUARK_H__ */
+
+// end from glib/glib/gquark.h
+
+///////////////////////////////////////////////////////////////////////////
+
+// from glib/glib/gerror.h
+
+/* gerror.h - Error reporting system
+ *
+ *  Copyright 2000 Red Hat, Inc.
+ *
+ * The Gnome Library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * The Gnome Library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with the Gnome Library; see the file COPYING.LIB.  If not,
+ * see <http://www.gnu.org/licenses/>.
+ */
+
+//#ifndef __G_ERROR_H__
+//#define __G_ERROR_H__
+
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+#if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
+#error "Only <glib.h> can be included directly."
+#endif
+#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+
+#include <stdarg.h>
+
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+#include <glib/gquark.h>
+#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+
+G_BEGIN_DECLS
+
+/**
+ * GError:
+ * @domain: error domain, e.g. #G_FILE_ERROR
+ * @code: error code, e.g. %G_FILE_ERROR_NOENT
+ * @message: human-readable informative error message
+ *
+ * The `GError` structure contains information about
+ * an error that has occurred.
+ */
+typedef struct _GError GError;
+
+struct _GError
+{
+  GQuark       domain;
+  gint         code;
+  gchar       *message;
+};
+
+GLIB_AVAILABLE_IN_ALL
+GError*  g_error_new           (GQuark         domain,
+                                gint           code,
+                                const gchar   *format,
+                                ...) G_GNUC_PRINTF (3, 4);
+
+GLIB_AVAILABLE_IN_ALL
+GError*  g_error_new_literal   (GQuark         domain,
+                                gint           code,
+                                const gchar   *message);
+GLIB_AVAILABLE_IN_ALL
+GError*  g_error_new_valist    (GQuark         domain,
+                                gint           code,
+                                const gchar   *format,
+                                va_list        args) G_GNUC_PRINTF(3, 0);
+
+GLIB_AVAILABLE_IN_ALL
+void     g_error_free          (GError        *error);
+GLIB_AVAILABLE_IN_ALL
+GError*  g_error_copy          (const GError  *error);
+
+GLIB_AVAILABLE_IN_ALL
+gboolean g_error_matches       (const GError  *error,
+                                GQuark         domain,
+                                gint           code);
+
+/* if (err) *err = g_error_new(domain, code, format, ...), also has
+ * some sanity checks.
+ */
+GLIB_AVAILABLE_IN_ALL
+void     g_set_error           (GError       **err,
+                                GQuark         domain,
+                                gint           code,
+                                const gchar   *format,
+                                ...) G_GNUC_PRINTF (4, 5);
+
+GLIB_AVAILABLE_IN_ALL
+void     g_set_error_literal   (GError       **err,
+                                GQuark         domain,
+                                gint           code,
+                                const gchar   *message);
+
+/* if (dest) *dest = src; also has some sanity checks.
+ */
+GLIB_AVAILABLE_IN_ALL
+void     g_propagate_error     (GError       **dest,
+				GError        *src);
+
+/* if (err && *err) { g_error_free(*err); *err = NULL; } */
+GLIB_AVAILABLE_IN_ALL
+void     g_clear_error         (GError       **err);
+
+/* if (err) prefix the formatted string to the ->message */
+GLIB_AVAILABLE_IN_ALL
+void     g_prefix_error               (GError       **err,
+                                       const gchar   *format,
+                                       ...) G_GNUC_PRINTF (2, 3);
+
+/* g_propagate_error then g_error_prefix on dest */
+GLIB_AVAILABLE_IN_ALL
+void     g_propagate_prefixed_error   (GError       **dest,
+                                       GError        *src,
+                                       const gchar   *format,
+                                       ...) G_GNUC_PRINTF (3, 4);
+
+G_END_DECLS
+
+//#endif /* __G_ERROR_H__ */
+
+
+// end from glib/glib/gerror.h
 
 #endif // LTW8_GTYPES_H_
 
