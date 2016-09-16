@@ -25,7 +25,7 @@
 #ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 _DEFS(glibmm,glib)
 
-#m4begin
+//#m4begin
 _PUSH()
 
 // m4 helper macros to generate the character-class inline functions.
@@ -47,7 +47,7 @@ inline $1 $2(char c)
 `'dnl`'')
 
 _POP()
-#m4end
+//#m4end
 
 #include <glib.h>
 
@@ -90,10 +90,16 @@ _POP()
 namespace ltw8
 {
 
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 _WRAP_ENUM(UnicodeType, GUnicodeType, NO_GTYPE)
 _WRAP_ENUM(UnicodeBreakType, GUnicodeBreakType, NO_GTYPE)
 _WRAP_ENUM(AsciiType, GAsciiType, NO_GTYPE)
 _WRAP_ENUM(NormalizeMode, GNormalizeMode, NO_GTYPE)
+#else
+#define NAMESPACE_LTW8_
+#include "ltw8_unicode_enums.h"
+#undef NAMESPACE_LTW8_
+#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 
 /** @defgroup Unicode Unicode Manipulation
  * Functions operating on Unicode characters and UTF-8 strings.
@@ -165,6 +171,5 @@ _ASCII_FUNC(int, xdigit_value)
 
 #endif // LTW8_UNICODE_H_
 
-// Note: ff=unix because I use cygwin as my primary git interface. //
-// vi: set ts=2 sts=2 sw=2 et ai ff=unix: //
+// vi: set ts=2 sts=2 sw=2 et ai: //
 

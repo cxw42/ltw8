@@ -4,6 +4,8 @@
 #ifndef _LTW8_USTRING_H
 #define _LTW8_USTRING_H
 
+// From glibmm/glib/glibmm/ustring.h
+
 /* Copyright (C) 2002 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or

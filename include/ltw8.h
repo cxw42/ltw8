@@ -3,6 +3,5 @@
 
 #include "ustring.h"
 
-// Note: ff=unix because I use cygwin as my primary git interface. //
-// vi: set ts=2 sts=2 sw=2 et ai ff=unix: //
+// vi: set ts=2 sts=2 sw=2 et ai: //
 
