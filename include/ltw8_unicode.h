@@ -7,8 +7,10 @@
 
 #include "ltw8_gmacros.h"
 #include "ltw8_gstrfuncs.h"
+#include "ltw8_unicode_enums.h"
+  // has material from glib/glib/gunicode.h
 
-// from glib/glib/gunicode.h
+// from glibmm/glib/src/unicode.hg
 
 /* Copyright (C) 2002 The gtkmm Development Team
  *
@@ -100,10 +102,7 @@ _WRAP_ENUM(UnicodeType, GUnicodeType, NO_GTYPE)
 _WRAP_ENUM(UnicodeBreakType, GUnicodeBreakType, NO_GTYPE)
 _WRAP_ENUM(AsciiType, GAsciiType, NO_GTYPE)
 _WRAP_ENUM(NormalizeMode, GNormalizeMode, NO_GTYPE)
-#else
-#define NAMESPACE_LTW8_
-#include "ltw8_unicode_enums.h"
-#undef NAMESPACE_LTW8_
+// ltw8: done in ltw8_unicode_enums.h
 #endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 
 /** @defgroup Unicode Unicode Manipulation
@@ -174,7 +173,7 @@ _ASCII_FUNC(int, xdigit_value)
 
 } // namespace ltw8
 
-// end from glib/glib/gunicode.h
+// end from glibmm/glib/src/unicode.hg
 
 #endif // LTW8_UNICODE_H_
 
