@@ -6,6 +6,9 @@
 #define LTW8_UNICODE_H_
 
 #include "ltw8_gmacros.h"
+#include "ltw8_gstrfuncs.h"
+
+// from glib/glib/gunicode.h
 
 /* Copyright (C) 2002 The gtkmm Development Team
  *
@@ -59,7 +62,7 @@ _DEFS(glibmm,glib)
   inline ty name(gunichar uc) { return g_unichar_ ## name (uc); }
 
 #define _UNICHAR_FUNC_BOOL(ty, name) \
-  inline ty name(gunichar uc) { return (g_unichar_ ## name (c) != 0); }
+  inline ty name(gunichar uc) { return (g_unichar_ ## name (uc) != 0); }
 
 #define _ASCII_FUNC(ty, name) \
   inline ty name(char c) { return g_ascii_ ## name (c); }
@@ -170,6 +173,8 @@ _ASCII_FUNC(int, xdigit_value)
 /** @} group Unicode */
 
 } // namespace ltw8
+
+// end from glib/glib/gunicode.h
 
 #endif // LTW8_UNICODE_H_
 
