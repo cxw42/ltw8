@@ -126,7 +126,11 @@ ltw8::strcompress(const std::string& source)
 ltw8::ustring
 ltw8::strerror(int errnum)
 {
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
   return g_strerror(errnum);
+#else //ltw8
+  return ltw8::ustring("");
+#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 }
 
 ltw8::ustring

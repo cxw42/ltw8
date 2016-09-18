@@ -2,6 +2,11 @@
 // New code copyright (c) Chris White, 2016.
 // from glib/glib/gstrfuncs.c
 
+// CAUTION: g_strerror is no longer available
+//#define G_LOCK(name) ((void)0)
+//#define G_UNLOCK(name) ((void)0)
+//#define G_LOCK_DEFINE_STATIC(name) ((void)0)
+
 /* GLIB - Library of useful routines for C programming
  * Copyright (C) 1995-1997  Peter Mattis, Spencer Kimball and Josh MacDonald
  *
@@ -1243,6 +1248,7 @@ g_ascii_strtoll (const gchar *nptr,
 #endif
 }
 
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 /**
  * g_strerror:
  * @errnum: the system error number. See the standard C %errno
@@ -1313,6 +1319,7 @@ g_strerror (gint errnum)
   errno = saved_errno;
   return msg;
 }
+#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 
 /**
  * g_strsignal:
@@ -2065,7 +2072,7 @@ g_strcompress (const gchar *source)
 
   g_return_val_if_fail (source != NULL, NULL);
 
-  dest = g_malloc (strlen (source) + 1);
+  dest = (gchar *)g_malloc (strlen (source) + 1);
   q = dest;
 
   while (*p)
@@ -2153,7 +2160,7 @@ g_strescape (const gchar *source,
 
   p = (guchar *) source;
   /* Each source byte needs maximally four destination chars (\777) */
-  q = dest = g_malloc (strlen (source) * 4 + 1);
+  q = dest = (gchar *)g_malloc (strlen (source) * 4 + 1);
 
   memset (excmap, 0, 256);
   if (exceptions)
