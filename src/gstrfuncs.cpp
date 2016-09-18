@@ -60,6 +60,8 @@
 #include "glibintl.h"
 #else
 #include "ltw8.h"
+#include "ltw8_gstrfuncs.h"
+#include "ltw8_implementation.h"
 #endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 
 
@@ -798,7 +800,7 @@ g_ascii_strtod (const gchar *nptr,
       char *copy, *c;
 
       /* We need to convert the '.' to the locale specific decimal point */
-      copy = g_malloc (end - nptr + 1 + decimal_point_len);
+      copy = (char *)g_malloc (end - nptr + 1 + decimal_point_len);
 
       c = copy;
       memcpy (c, nptr, decimal_point_pos - nptr);
@@ -828,7 +830,7 @@ g_ascii_strtod (const gchar *nptr,
     {
       char *copy;
 
-      copy = g_malloc (end - (char *)nptr + 1);
+      copy = (char *)g_malloc (end - (char *)nptr + 1);
       memcpy (copy, nptr, end - nptr);
       *(copy + (end - (char *)nptr)) = 0;
 
