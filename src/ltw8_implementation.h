@@ -2,9 +2,13 @@
 // New code copyright (c) Chris White, 2016.
 
 #include "ltw8_internal.h"
+#include "ltw8_gtypes.h"
+  // for gpointer
 #include <memory>
+#include <stdlib.h>
 
-//DEBUG
+// All of these are hacks to make the routines compile.
+// They should be tested or replaced with something better!
 
 // Based on glib/glib/gmessages.h
 #define g_return_val_if_fail(expr, val) \
@@ -21,7 +25,11 @@ make_unique_ptr_gfree(T* p)
 
 namespace ltw8 { using ::make_unique_ptr_gfree; }
 
-//END DEBUG
+// Memory management: use malloc/free since delete<void *> is undefined
+inline void g_free(gpointer ptr) { free(ptr); }
 
-// vi: set ts=2 sts=2 sw=2 et ai: //
+// Logging: TODO actually do logging :)
+#define g_warning(...) ((void)0)
+
+// vi: set ts=2 sts=2 sw=2 et ai syntax=cpp: //
 
