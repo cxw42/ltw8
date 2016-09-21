@@ -33,3 +33,7 @@
 *~
 *.swp
 
+# Temporaries
+*.tmp
+*.log
+
