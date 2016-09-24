@@ -26,9 +26,10 @@
 #ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #include <glibmmconfig.h>
 #include <glibmm/unicode.h>
-#include <glib.h>
 #else //ltw8 headers
+#include <glib.h>
 #include "ltw8_unicode.h"
+#include "ltw8_internal.h"
 #endif //DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 
 #include <iosfwd>

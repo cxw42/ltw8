@@ -1,6 +1,6 @@
 // -*- c++ -*-
-#ifndef _GLIBMM_EXCEPTION_H
-#define _GLIBMM_EXCEPTION_H
+#ifndef LTW8_EXCEPTION_H_
+#define LTW8_EXCEPTION_H_
 /* $Id$ */
 
 /* exception.h
@@ -22,18 +22,23 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #include <glibmm/ustring.h>
+#else //ltw8
+#include "ltw8_ustring.h"
+#endif
 
-namespace Glib
+namespace ltw8
 {
 
 class Exception
 {
 public:
   virtual ~Exception() noexcept = 0;
-  virtual Glib::ustring what() const = 0;
+  virtual ltw8::ustring what() const = 0;
 };
 
-} // namespace Glib
+} // namespace ltw8
 
-#endif /* _GLIBMM_EXCEPTION_H */
+#endif /* LTW8_EXCEPTION_H_ */
+

@@ -24,20 +24,25 @@
 //#include <glib/gmessages.h> //For g_assert() in glib < 2.15.0
 #include <glib.h> //For g_assert() in all versions of glib.
 
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #include <glibmm/exception.h>
+#else //ltw8
+#include "exception.h"
+#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 
-namespace Glib
+namespace ltw8
 {
 
 Exception::~Exception() noexcept
 {
 }
 
-Glib::ustring
+ltw8::ustring
 Exception::what() const
 {
   g_assert_not_reached();
-  return Glib::ustring();
+  return ltw8::ustring();
 }
 
-} // namespace Glib
+} // namespace ltw8
+

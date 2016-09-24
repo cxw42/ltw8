@@ -4,8 +4,8 @@
 #ifndef LTW8_UNICODE_ENUMS_
 #define LTW8_UNICODE_ENUMS_
 
-#define GLIB_DEPRECATED_IN_2_30
-#define GLIB_AVAILABLE_IN_2_30
+//#define GLIB_DEPRECATED_IN_2_30
+//#define GLIB_AVAILABLE_IN_2_30
 
 // from glib/glib/gunicode.h
 
@@ -41,8 +41,8 @@
 #include <glib/gerror.h>
 #include <glib/gtypes.h>
 
-#else
-#include "ltw8_gtypes.h"
+#else //ltw8
+//#include "ltw8_gtypes.h"
 #endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 
 G_BEGIN_DECLS

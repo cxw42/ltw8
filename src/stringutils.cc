@@ -1,4 +1,12 @@
 // -*- c++ -*-
+// stringutils.cc from the ltw8 UTF-8 library.
+// New code copyright (c) Chris White, 2016.
+
+#include "ltw8_stringutils.h"
+#include "ltw8_implementation.h"
+
+
+// from glibmm/glib/glibmm/stringutils.cc
 /* $Id$ */
 
 /* Copyright (C) 2002 The gtkmm Development Team
@@ -18,34 +26,39 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #include <glibmmconfig.h>
 #include <glibmm/stringutils.h>
 #include <glibmm/utility.h>
+#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #include <glib.h>
 #include <cerrno>
 #include <stdexcept>
 
+// Note: If compilation problems,
+// per https://gcc.gnu.org/ml/gcc-help/2009-10/msg00242.html, 
+// can't do this as "ltw8::..." but instead need "namespace ltw8 {...}" 
 bool
-Glib::str_has_prefix(const std::string& str, const std::string& prefix)
+ltw8::str_has_prefix(const std::string& str, const std::string& prefix)
 {
   return g_str_has_prefix(str.c_str(), prefix.c_str());
 }
 
 bool
-Glib::str_has_suffix(const std::string& str, const std::string& suffix)
+ltw8::str_has_suffix(const std::string& str, const std::string& suffix)
 {
   return g_str_has_suffix(str.c_str(), suffix.c_str());
 }
 
 double
-Glib::Ascii::strtod(const std::string& str)
+ltw8::Ascii::strtod(const std::string& str)
 {
   std::string::size_type dummy;
-  return Glib::Ascii::strtod(str, dummy, 0);
+  return ltw8::Ascii::strtod(str, dummy, 0);
 }
 
 double
-Glib::Ascii::strtod(
+ltw8::Ascii::strtod(
   const std::string& str, std::string::size_type& end_index, std::string::size_type start_index)
 {
   if (start_index >= str.size())
@@ -82,7 +95,7 @@ Glib::Ascii::strtod(
 }
 
 std::string
-Glib::Ascii::dtostr(double d)
+ltw8::Ascii::dtostr(double d)
 {
   char buf[G_ASCII_DTOSTR_BUF_SIZE];
 
@@ -90,34 +103,41 @@ Glib::Ascii::dtostr(double d)
 }
 
 std::string
-Glib::strescape(const std::string& source)
+ltw8::strescape(const std::string& source)
 {
   const auto buf = make_unique_ptr_gfree(g_strescape(source.c_str(), nullptr));
   return buf.get();
 }
 
 std::string
-Glib::strescape(const std::string& source, const std::string& exceptions)
+ltw8::strescape(const std::string& source, const std::string& exceptions)
 {
   const auto buf = make_unique_ptr_gfree(g_strescape(source.c_str(), exceptions.c_str()));
   return buf.get();
 }
 
 std::string
-Glib::strcompress(const std::string& source)
+ltw8::strcompress(const std::string& source)
 {
   const auto buf = make_unique_ptr_gfree(g_strcompress(source.c_str()));
   return buf.get();
 }
 
-Glib::ustring
-Glib::strerror(int errnum)
+ltw8::ustring
+ltw8::strerror(int errnum)
 {
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
   return g_strerror(errnum);
+#else //ltw8
+  return ltw8::ustring("");
+#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 }
 
-Glib::ustring
-Glib::strsignal(int signum)
+ltw8::ustring
+ltw8::strsignal(int signum)
 {
   return g_strsignal(signum);
 }
+
+// vi: set ts=2 sts=2 sw=2 et ai: //
+

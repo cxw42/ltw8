@@ -1,6 +1,6 @@
 // -*- c++ -*-
-#ifndef _GLIBMM_ERROR_H
-#define _GLIBMM_ERROR_H
+#ifndef LTW8_ERROR_H_
+#define LTW8_ERROR_H_
 
 /* Copyright 2002 The gtkmm Development Team
  *
@@ -19,18 +19,22 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #include <glibmmconfig.h>
 #include <glibmm/exception.h>
+#else //ltw8
 #include <glib.h>
+#include "exception.h"
+#endif
 
-namespace Glib
+namespace ltw8
 {
 
-class Error : public Glib::Exception
+class Error : public ltw8::Exception
 {
 public:
   Error();
-  Error(GQuark error_domain, int error_code, const Glib::ustring& message);
+  Error(GQuark error_domain, int error_code, const ltw8::ustring& message);
   explicit Error(GError* gobject, bool take_copy = false);
 
   Error(const Error& other);
@@ -40,7 +44,7 @@ public:
 
   GQuark domain() const;
   int code() const;
-  Glib::ustring what() const override;
+  ltw8::ustring what() const override;
 
   bool matches(GQuark error_domain, int error_code) const;
 
@@ -65,6 +69,6 @@ protected:
   GError* gobject_;
 };
 
-} // namespace Glib
+} // namespace ltw8
 
-#endif /* _GLIBMM_ERROR_H */
+#endif /* LTW8_ERROR_H_ */

@@ -1,3 +1,9 @@
+// ustring.cc from the ltw8 UTF-8 library.
+// New code copyright (c) Chris White, 2016.
+// from glibmm/glib/glibmm/ustring.cc
+
+#include "ltw8_implementation.h"
+
 /* Copyright (C) 2002 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -15,25 +21,34 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #include <glibmmconfig.h>
 #include <glibmm/ustring.h>
 #include <glibmm/convert.h>
 #include <glibmm/error.h>
 #include <glibmm/utility.h>
+#else
+#include <glib.h>
+#include "ltw8.h"
+#include "ltw8_unicode.h"
+//#include "ltw8_unicode_enums.h"
+#include "ltw8_ustring.h"
+#include "error.h"
+#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 
 #include <algorithm>
 #include <iostream>
 #include <cstring>
 #include <stdexcept>
 #include <utility> // For std::move()
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+//#ifdef HAVE_CONFIG_H
+//#include <config.h>
+//#endif
 
 namespace
 {
 
-using Glib::ustring;
+using ltw8::ustring;
 
 // Little helper to make the conversion from gunichar to UTF-8 a one-liner.
 //
@@ -143,7 +158,7 @@ utf8_find_first_of(const std::string& str, ustring::size_type offset, const char
 
   long ucs4_match_size = 0;
   const auto ucs4_match =
-    Glib::make_unique_ptr_gfree(g_utf8_to_ucs4_fast(utf8_match, utf8_match_size, &ucs4_match_size));
+    ltw8::make_unique_ptr_gfree(g_utf8_to_ucs4_fast(utf8_match, utf8_match_size, &ucs4_match_size));
 
   const gunichar* const match_begin = ucs4_match.get();
   const gunichar* const match_end = match_begin + ucs4_match_size;
@@ -172,7 +187,7 @@ utf8_find_last_of(const std::string& str, ustring::size_type offset, const char*
 {
   long ucs4_match_size = 0;
   const auto ucs4_match =
-    Glib::make_unique_ptr_gfree(g_utf8_to_ucs4_fast(utf8_match, utf8_match_size, &ucs4_match_size));
+    ltw8::make_unique_ptr_gfree(g_utf8_to_ucs4_fast(utf8_match, utf8_match_size, &ucs4_match_size));
 
   const gunichar* const match_begin = ucs4_match.get();
   const gunichar* const match_end = match_begin + ucs4_match_size;
@@ -202,7 +217,7 @@ utf8_find_last_of(const std::string& str, ustring::size_type offset, const char*
 
 } // anonymous namespace
 
-namespace Glib
+namespace ltw8
 {
 
 #ifndef GLIBMM_HAVE_ALLOWS_STATIC_INLINE_NPOS
@@ -272,7 +287,7 @@ get_unichar_from_std_iterator(std::string::const_iterator pos)
   return result;
 }
 
-/**** Glib::ustring ********************************************************/
+/**** ltw8::ustring ********************************************************/
 
 ustring::ustring() : string_()
 {
@@ -339,7 +354,7 @@ ustring::swap(ustring& other)
   string_.swap(other.string_);
 }
 
-/**** Glib::ustring::operator=() *******************************************/
+/**** ltw8::ustring::operator=() *******************************************/
 
 ustring&
 ustring::operator=(const ustring& other)
@@ -391,7 +406,7 @@ ustring::operator=(char c)
   return *this;
 }
 
-/**** Glib::ustring::assign() **********************************************/
+/**** ltw8::ustring::assign() **********************************************/
 
 ustring&
 ustring::assign(const ustring& src)
@@ -444,7 +459,7 @@ ustring::assign(ustring::size_type n, char c)
   return *this;
 }
 
-/**** Glib::ustring::operator+=() ******************************************/
+/**** ltw8::ustring::operator+=() ******************************************/
 
 ustring&
 ustring::operator+=(const ustring& src)
@@ -475,7 +490,7 @@ ustring::operator+=(char c)
   return *this;
 }
 
-/**** Glib::ustring::push_back() *******************************************/
+/**** ltw8::ustring::push_back() *******************************************/
 
 void
 ustring::push_back(gunichar uc)
@@ -490,7 +505,7 @@ ustring::push_back(char c)
   string_ += c;
 }
 
-/**** Glib::ustring::append() **********************************************/
+/**** ltw8::ustring::append() **********************************************/
 
 ustring&
 ustring::append(const ustring& src)
@@ -535,7 +550,7 @@ ustring::append(ustring::size_type n, char c)
   return *this;
 }
 
-/**** Glib::ustring::insert() **********************************************/
+/**** ltw8::ustring::insert() **********************************************/
 
 ustring&
 ustring::insert(ustring::size_type i, const ustring& src)
@@ -608,7 +623,7 @@ ustring::insert(ustring::iterator p, ustring::size_type n, char c)
   string_.insert(p.base(), n, c);
 }
 
-/**** Glib::ustring::replace() *********************************************/
+/**** ltw8::ustring::replace() *********************************************/
 
 ustring&
 ustring::replace(ustring::size_type i, ustring::size_type n, const ustring& src)
@@ -697,7 +712,7 @@ ustring::replace(ustring::iterator pbegin, ustring::iterator pend, ustring::size
   return *this;
 }
 
-/**** Glib::ustring::erase() ***********************************************/
+/**** ltw8::ustring::erase() ***********************************************/
 
 void
 ustring::clear()
@@ -735,7 +750,7 @@ ustring::erase(ustring::iterator pbegin, ustring::iterator pend)
   return iterator(string_.erase(pbegin.base(), pend.base()));
 }
 
-/**** Glib::ustring::compare() *********************************************/
+/**** ltw8::ustring::compare() *********************************************/
 
 int
 ustring::compare(const ustring& rhs) const
@@ -775,7 +790,7 @@ ustring::compare(ustring::size_type i, ustring::size_type n, const char* rhs) co
   return ustring(*this, i, n).compare(rhs);
 }
 
-/**** Glib::ustring -- index access ****************************************/
+/**** ltw8::ustring -- index access ****************************************/
 
 ustring::value_type ustring::operator[](ustring::size_type i) const
 {
@@ -791,7 +806,7 @@ ustring::at(ustring::size_type i) const
   return g_utf8_get_char(&string_.at(byte_offset));
 }
 
-/**** Glib::ustring -- iterator access *************************************/
+/**** ltw8::ustring -- iterator access *************************************/
 
 ustring::iterator
 ustring::begin()
@@ -841,7 +856,7 @@ ustring::rend() const
   return const_reverse_iterator(const_iterator(string_.begin()));
 }
 
-/**** Glib::ustring::find() ************************************************/
+/**** ltw8::ustring::find() ************************************************/
 
 ustring::size_type
 ustring::find(const ustring& str, ustring::size_type i) const
@@ -875,7 +890,7 @@ ustring::find(char c, ustring::size_type i) const
   return utf8_char_offset(string_, string_.find(c, utf8_byte_offset(string_, i)));
 }
 
-/**** Glib::ustring::rfind() ***********************************************/
+/**** ltw8::ustring::rfind() ***********************************************/
 
 ustring::size_type
 ustring::rfind(const ustring& str, ustring::size_type i) const
@@ -909,7 +924,7 @@ ustring::rfind(char c, ustring::size_type i) const
   return utf8_char_offset(string_, string_.rfind(c, utf8_byte_offset(string_, i)));
 }
 
-/**** Glib::ustring::find_first_of() ***************************************/
+/**** ltw8::ustring::find_first_of() ***************************************/
 
 ustring::size_type
 ustring::find_first_of(const ustring& match, ustring::size_type i) const
@@ -941,7 +956,7 @@ ustring::find_first_of(char c, ustring::size_type i) const
   return find(c, i);
 }
 
-/**** Glib::ustring::find_last_of() ****************************************/
+/**** ltw8::ustring::find_last_of() ****************************************/
 
 ustring::size_type
 ustring::find_last_of(const ustring& match, ustring::size_type i) const
@@ -973,7 +988,7 @@ ustring::find_last_of(char c, ustring::size_type i) const
   return rfind(c, i);
 }
 
-/**** Glib::ustring::find_first_not_of() ***********************************/
+/**** ltw8::ustring::find_first_not_of() ***********************************/
 
 ustring::size_type
 ustring::find_first_not_of(const ustring& match, ustring::size_type i) const
@@ -1032,7 +1047,7 @@ ustring::find_first_not_of(char c, ustring::size_type i) const
   return npos;
 }
 
-/**** Glib::ustring::find_last_not_of() ************************************/
+/**** ltw8::ustring::find_last_not_of() ************************************/
 
 ustring::size_type
 ustring::find_last_not_of(const ustring& match, ustring::size_type i) const
@@ -1087,7 +1102,7 @@ ustring::find_last_not_of(char c, ustring::size_type i) const
   return i_found;
 }
 
-/**** Glib::ustring -- get size and resize *********************************/
+/**** ltw8::ustring -- get size and resize *********************************/
 
 bool
 ustring::empty() const
@@ -1153,7 +1168,7 @@ ustring::reserve(ustring::size_type n)
   string_.reserve(n);
 }
 
-/**** Glib::ustring -- C string access *************************************/
+/**** ltw8::ustring -- C string access *************************************/
 
 const char*
 ustring::data() const
@@ -1177,7 +1192,7 @@ ustring::copy(char* dest, ustring::size_type n, ustring::size_type i) const
   return string_.copy(dest, bounds.n, bounds.i);
 }
 
-/**** Glib::ustring -- UTF-8 utilities *************************************/
+/**** ltw8::ustring -- UTF-8 utilities *************************************/
 
 bool
 ustring::validate() const
@@ -1267,11 +1282,11 @@ ustring::casefold_collate_key() const
   return std::string(make_unique_ptr_gfree(key_buf).get());
 }
 
-/**** Glib::ustring -- Message formatting **********************************/
+/**** ltw8::ustring -- Message formatting **********************************/
 
 // static
 ustring
-ustring::compose_argv(const Glib::ustring& fmt, int argc, const ustring* const* argv)
+ustring::compose_argv(const ltw8::ustring& fmt, int argc, const ustring* const* argv)
 {
   std::string::size_type result_size = fmt.raw().size();
 
@@ -1321,21 +1336,21 @@ ustring::compose_argv(const Glib::ustring& fmt, int argc, const ustring* const* 
   return result;
 }
 
-/**** Glib::ustring::SequenceToString **************************************/
+/**** ltw8::ustring::SequenceToString **************************************/
 
-ustring::SequenceToString<Glib::ustring::iterator, gunichar>::SequenceToString(
-  Glib::ustring::iterator pbegin, Glib::ustring::iterator pend)
+ustring::SequenceToString<ltw8::ustring::iterator, gunichar>::SequenceToString(
+  ltw8::ustring::iterator pbegin, ltw8::ustring::iterator pend)
 : std::string(pbegin.base(), pend.base())
 {
 }
 
-ustring::SequenceToString<Glib::ustring::const_iterator, gunichar>::SequenceToString(
-  Glib::ustring::const_iterator pbegin, Glib::ustring::const_iterator pend)
+ustring::SequenceToString<ltw8::ustring::const_iterator, gunichar>::SequenceToString(
+  ltw8::ustring::const_iterator pbegin, ltw8::ustring::const_iterator pend)
 : std::string(pbegin.base(), pend.base())
 {
 }
 
-/**** Glib::ustring::FormatStream ******************************************/
+/**** ltw8::ustring::FormatStream ******************************************/
 
 ustring::FormatStream::FormatStream() : stream_()
 {
@@ -1379,16 +1394,16 @@ ustring::FormatStream::to_string() const
 
   if (error)
   {
-    Glib::Error::throw_exception(error);
+    ltw8::Error::throw_exception(error);
   }
 
   return ustring(buf.get(), buf.get() + n_bytes);
 }
 
-/**** Glib::ustring -- stream I/O operators ********************************/
+/**** ltw8::ustring -- stream I/O operators ********************************/
 
 std::istream&
-operator>>(std::istream& is, Glib::ustring& utf8_string)
+operator>>(std::istream& is, ltw8::ustring& utf8_string)
 {
   std::string str;
   is >> str;
@@ -1400,7 +1415,7 @@ operator>>(std::istream& is, Glib::ustring& utf8_string)
 
   if (error)
   {
-    Glib::Error::throw_exception(error);
+    ltw8::Error::throw_exception(error);
   }
 
   utf8_string.assign(buf.get(), buf.get() + n_bytes);
@@ -1409,14 +1424,14 @@ operator>>(std::istream& is, Glib::ustring& utf8_string)
 }
 
 std::ostream&
-operator<<(std::ostream& os, const Glib::ustring& utf8_string)
+operator<<(std::ostream& os, const ltw8::ustring& utf8_string)
 {
   GError* error = nullptr;
   const auto buf = make_unique_ptr_gfree(g_locale_from_utf8(
     utf8_string.raw().data(), utf8_string.raw().size(), nullptr, nullptr, &error));
   if (error)
   {
-    Glib::Error::throw_exception(error);
+    ltw8::Error::throw_exception(error);
   }
 
   // This won't work if the string contains NUL characters.  Unfortunately,
@@ -1459,7 +1474,7 @@ operator>>(std::wistream& is, ustring& utf8_string)
 
   if (error)
   {
-    Glib::Error::throw_exception(error);
+    ltw8::Error::throw_exception(error);
   }
 
   utf8_string.assign(buf.get(), buf.get() + n_bytes);
@@ -1487,7 +1502,7 @@ operator<<(std::wostream& os, const ustring& utf8_string)
 
   if (error)
   {
-    Glib::Error::throw_exception(error);
+    ltw8::Error::throw_exception(error);
   }
 
   // This won't work if the string contains NUL characters.  Unfortunately,
@@ -1504,4 +1519,7 @@ operator<<(std::wostream& os, const ustring& utf8_string)
 
 #endif /* GLIBMM_HAVE_WIDE_STREAM */
 
-} // namespace Glib
+} // namespace ltw8
+
+// vi: set ts=2 sts=2 sw=2 et ai: //
+

@@ -17,30 +17,35 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #include <glibmmconfig.h>
 #include <glibmm/error.h>
 #include <glibmm/wrap.h>
 #include <glibmm/wrap_init.h>
+#else //ltw8
+#include "error.h"
+#include "ltw8_implementation.h"
+#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #include <glib.h>
 #include <map>
 
 namespace
 {
 
-using ThrowFuncTable = std::map<GQuark, Glib::Error::ThrowFunc>;
+using ThrowFuncTable = std::map<GQuark, ltw8::Error::ThrowFunc>;
 
 static ThrowFuncTable* throw_func_table = nullptr;
 
 } // anonymous namespace
 
-namespace Glib
+namespace ltw8
 {
 
 Error::Error() : gobject_(nullptr)
 {
 }
 
-Error::Error(GQuark error_domain, int error_code, const Glib::ustring& message)
+Error::Error(GQuark error_domain, int error_code, const ltw8::ustring& message)
 : gobject_(g_error_new_literal(error_domain, error_code, message.c_str()))
 {
 }
@@ -95,7 +100,7 @@ Error::code() const
   return gobject_->code;
 }
 
-Glib::ustring
+ltw8::ustring
 Error::what() const
 {
   g_return_val_if_fail(gobject_ != nullptr, "");
@@ -136,8 +141,8 @@ Error::register_init()
   if (!throw_func_table)
   {
     throw_func_table = new ThrowFuncTable();
-    Glib::wrap_register_init();
-    Glib::wrap_init(); // make sure that at least the Glib exceptions are registered
+    ltw8::wrap_register_init();
+    ltw8::wrap_init(); // make sure that at least the ltw8 exceptions are registered
   }
 }
 
@@ -177,12 +182,12 @@ Error::throw_exception(GError* gobject)
     g_assert_not_reached();
   }
 
-  g_warning("Glib::Error::throw_exception():\n  "
-            "unknown error domain '%s': throwing generic Glib::Error exception\n",
+  g_warning("ltw8::Error::throw_exception():\n  "
+            "unknown error domain '%s': throwing generic ltw8::Error exception\n",
     (gobject->domain) ? g_quark_to_string(gobject->domain) : "(null)");
 
   // Doesn't copy, because error-returning functions return a newly allocated GError for us.
-  throw Glib::Error(gobject);
+  throw ltw8::Error(gobject);
 }
 
-} // namespace Glib
+} // namespace ltw8
