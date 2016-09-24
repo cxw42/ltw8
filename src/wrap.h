@@ -19,10 +19,8 @@
  */
 
 #include <glib-object.h>
-#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
-#include <glibmm/refptr.h>
-#include <glibmm/objectbase.h>
-#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
+#include <refptr.h>
+#include <objectbase.h>
 
 namespace ltw8
 {

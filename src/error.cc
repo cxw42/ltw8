@@ -17,17 +17,11 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
-#include <glibmmconfig.h>
-#include <glibmm/error.h>
-#include <glibmm/wrap.h>
-#include <glibmm/wrap_init.h>
-#else //ltw8
-#include "error.h"
+//#include <glibmmconfig.h>
+#include <error.h>
+#include <wrap.h>
+#include <wrap_init.h>
 #include "ltw8_implementation.h"
-#include "wrap.h"
-#include "wrap_init.h"
-#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #include <glib.h>
 #include <map>
 

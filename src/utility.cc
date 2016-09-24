@@ -1,10 +1,8 @@
 // -*- c++ -*-
-#ifndef _GLIBMM_EXCEPTIONHANDLER_H
-#define _GLIBMM_EXCEPTIONHANDLER_H
 
-/* exceptionhandler.h
- *
- * Copyright 2002 The gtkmm Development Team
+/* $Id$ */
+
+/* Copyright (C) 2002 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -21,21 +19,20 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-//#include <glibmmconfig.h>
-#include <sigc++/sigc++.h>
+#include <utility.h>
 
-namespace ltw8
+void
+ltw8::append_canonical_typename(std::string& dest, const char* type_name)
 {
+  const std::string::size_type offset = dest.size();
+  dest += type_name;
 
-/** Specify a slot to be called when an exception is thrown by a signal handler.
- */
-sigc::connection add_exception_handler(const sigc::slot<void>& slot);
+  std::string::iterator p = dest.begin() + offset;
+  const std::string::iterator pend = dest.end();
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-// internal
-void exception_handlers_invoke() noexcept;
-#endif // DOXYGEN_SHOULD_SKIP_THIS
-
-} // namespace ltw8
-
-#endif /* _GLIBMM_EXCEPTIONHANDLER_H */
+  for (; p != pend; ++p)
+  {
+    if (!(g_ascii_isalnum(*p) || *p == '_' || *p == '-'))
+      *p = '+';
+  }
+}

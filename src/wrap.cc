@@ -20,14 +20,10 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
-#include <glibmmconfig.h>
-#include <glibmm/object.h>
-#include <glibmm/quark.h>
-#include <glibmm/wrap.h>
-#else //ltw8
-#include "wrap.h"
-#endif
+//#include <glibmmconfig.h>
+#include <object.h>
+#include <quark.h>
+#include <wrap.h>
 #include <vector>
 #include <glib.h>
 #include <glib-object.h>

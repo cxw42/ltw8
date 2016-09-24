@@ -1,19 +1,32 @@
+#include <glibmm/class.h> glibmm
+#include <glibmm/containerhandle_shared.h> glibmm
 #include <glibmm/convert.h> src
+#include <glibmm/debug.h> glibmm
+enums src
 #include <glibmm/error.h> - pulled in
 #include <glibmm/exception.h> - pulled in
 #include <glibmm/exceptionhandler.h> - pulled in
-
-// TODO grab this chunk via upstream_gnome
-#include <glibmm/object.h>
-#include <glibmm/objectbase.h>
-#include <glibmm/quark.h>
-#include <glibmm/refptr.h>
-#include <glibmm/stringutils.h>
-
+#include <glibmm/interface.h> glibmm
+#include <glibmm/object.h> glibmm
+#include <glibmm/objectbase.h> glibmm
+#include <glibmm/private/interface_p.h> src
+#include <glibmm/private/object_p.h> src
+#include <glibmm/property.h> glibmm
+#include <glibmm/propertyproxy.h> glibmm
+#include <glibmm/propertyproxy_base.h> glibmm
+#include <glibmm/quark.h> glibmm
+#include <glibmm/refptr.h> glibmm
+#include <glibmm/signalproxy.h> glibmm
+signalproxy_connectionnode glibmm
+#include <glibmm/stringutils.h> src
 #include <glibmm/threads.h> src
 #include <glibmm/unicode.h> src
 #include <glibmm/ustring.h> - pulled in
 #include <glibmm/utility.h> glibmm
+#include <glibmm/value.h> glibmm
+#include <glibmm/value_custom.h> glibmm
+variant src
+value_basictypes src
 #include <glibmm/wrap.h> glibmm - pulled in
 #include <glibmm/wrap_init.h> glibmm    - pulled in
 

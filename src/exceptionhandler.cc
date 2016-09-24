@@ -20,11 +20,11 @@
  */
 
 #ifndef GLIBMM_CAN_USE_THREAD_LOCAL
-#include <glibmm/threads.h>
+#include <threads.h>
 #endif
-#include <glibmmconfig.h>
-#include <glibmm/error.h>
-#include <glibmm/exceptionhandler.h>
+//#include <glibmmconfig.h>
+#include <error.h>
+#include <exceptionhandler.h>
 #include <glib.h>
 #include <exception>
 #include <list>
@@ -39,7 +39,7 @@ using HandlerList = std::list<sigc::slot<void()>>;
 #ifdef GLIBMM_CAN_USE_THREAD_LOCAL
 static thread_local HandlerList* thread_specific_handler_list = nullptr;
 #else
-static Glib::Threads::Private<HandlerList> thread_specific_handler_list;
+static ltw8::Threads::Private<HandlerList> thread_specific_handler_list;
 #endif
 
 static void
@@ -48,7 +48,7 @@ glibmm_exception_warning(const GError* error)
   g_assert(error != nullptr);
 
   g_critical("\n"
-             "unhandled exception (type Glib::Error) in signal handler:\n"
+             "unhandled exception (type ltw8::Error) in signal handler:\n"
              "domain: %s\n"
              "code  : %d\n"
              "what  : %s\n",
@@ -62,12 +62,12 @@ glibmm_unexpected_exception()
   {
     throw; // re-throw current exception
   }
-  catch (const Glib::Error& error)
+  catch (const ltw8::Error& error)
   {
     // Access the GError directly, to avoid possible exceptions from C++ code.
     glibmm_exception_warning(error.gobj());
 
-    // For most failures that cause a Glib::Error exception, aborting the
+    // For most failures that cause a ltw8::Error exception, aborting the
     // program seems too harsh.  Instead, give control back to the main loop.
     return;
   }
@@ -86,7 +86,7 @@ glibmm_unexpected_exception()
 
 } // anonymous namespace
 
-namespace Glib
+namespace ltw8
 {
 
 sigc::connection
@@ -170,4 +170,4 @@ exception_handlers_invoke() noexcept
   glibmm_unexpected_exception();
 }
 
-} // namespace Glib
+} // namespace ltw8

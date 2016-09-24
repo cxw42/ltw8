@@ -24,6 +24,7 @@
   do { if(!(expr)) { return (val); } } while(0)
 #endif
 
+#if 0
 // Based on glibmm/glib/glibmm/utility.h
 template <typename T>
 inline
@@ -34,6 +35,7 @@ make_unique_ptr_gfree(T* p)
 }
 
 namespace ltw8 { using ::make_unique_ptr_gfree; }
+#endif
 
 #if 0
 // Memory management: use malloc/free since delete<void *> is undefined

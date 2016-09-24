@@ -1,6 +1,9 @@
 // ltw8_stringutils.h: glibmm stringutils header for the ltw8 UTF-8 library.
 // New code copyright (c) Chris White, 2016.
 
+#ifndef LTW8_STRINGUTILS_H_
+#define LTW8_STRINGUTILS_H_
+
 #include "ltw8_internal.h"
 #include "ltw8_ustring.h"
 
@@ -29,6 +32,7 @@
  */
 
 //#include <glibmm/ustring.h>
+#include "ltw8_ustring.h"
 
 namespace ltw8
 {
@@ -185,6 +189,8 @@ ltw8::ustring strsignal(int signum);
 //#endif /* _GLIBMM_STRINGUTILS_H */
 
 // end from glibmm/glib/glibmm/stringutils.h
+
+#endif // LTW8_STRINGUTILS_H_
 
 // vi: set ts=2 sts=2 sw=2 et ai: //
 

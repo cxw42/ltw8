@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmmconfig.h>
-#include <glibmm/unicode.h>
+//#include <glibmmconfig.h>
+#include "ltw8_unicode.h"
 #include <glib.h>
 
 #include <iosfwd>
@@ -30,7 +30,7 @@
 #include <cstddef> /* for std::ptrdiff_t */
 #endif
 
-namespace Glib
+namespace ltw8
 {
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -69,7 +69,7 @@ struct IteratorTraits<const T*>
 #endif /* GLIBMM_HAVE_STD_ITERATOR_TRAITS */
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/** The iterator type of Glib::ustring.
+/** The iterator type of ltw8::ustring.
  * Note this is not a random access iterator but a bidirectional one,
  * since all index operations need to iterate over the UTF-8 data.  Use
  * std::advance() to move to a certain position.  However, all of the
@@ -81,15 +81,15 @@ struct IteratorTraits<const T*>
  * Therefore, any write operation would invalidate all other iterators
  * pointing into the same string.
  *
- * The Glib::ustring iterated over must contain only valid UTF-8 data.
+ * The ltw8::ustring iterated over must contain only valid UTF-8 data.
  * If it does not, operator++(), operator-\-() and operator*() may make
  * accesses outside the bounds of the string. A loop such as the following
  * one would not stop at the end of the string.
  * @code
  * // Bad code! Don't do this!
  * const char not_utf8[] = { '\x80', '\xef', '\x80', '\x80', '\xef', '\x80' };
- * const Glib::ustring s(not_utf8, not_utf8 + sizeof not_utf8);
- * for (Glib::ustring::const_iterator it = s.begin(); it != s.end(); ++it)
+ * const ltw8::ustring s(not_utf8, not_utf8 + sizeof not_utf8);
+ * for (ltw8::ustring::const_iterator it = s.begin(); it != s.end(); ++it)
  *   std::cout << *it << std::endl;
  * @endcode
  *
@@ -128,24 +128,24 @@ private:
  * position, depending on the UTF-8 character width.  You have to make
  * sure the source contains at least one valid UTF-8 character.
  *
- * This is mainly used by the implementation of Glib::ustring::iterator,
+ * This is mainly used by the implementation of ltw8::ustring::iterator,
  * but it might be useful as utility function if you prefer using
  * std::string even for UTF-8 encoding.
  */
 gunichar get_unichar_from_std_iterator(std::string::const_iterator pos) G_GNUC_PURE;
 
-/** Glib::ustring has much the same interface as std::string, but contains
+/** ltw8::ustring has much the same interface as std::string, but contains
  * %Unicode characters encoded as UTF-8.
  *
  * @par About UTF-8 and ASCII
  * @par
  * The standard character set ANSI_X3.4-1968&nbsp;-- more commonly known as
  * ASCII&nbsp;-- is a subset of UTF-8.  So, if you want to, you can use
- * Glib::ustring without even thinking about UTF-8.
+ * ltw8::ustring without even thinking about UTF-8.
  * @par
  * Whenever ASCII is mentioned in this manual, we mean the @em real ASCII
  * (i.e. as defined in ANSI_X3.4-1968), which contains only 7-bit characters.
- * Glib::ustring can @em not be used with ASCII-compatible extended 8-bit
+ * ltw8::ustring can @em not be used with ASCII-compatible extended 8-bit
  * charsets like ISO-8859-1.  It's a good idea to avoid string literals
  * containing non-ASCII characters (e.g. German umlauts) in source code,
  * or at least you should use UTF-8 literals.
@@ -153,18 +153,18 @@ gunichar get_unichar_from_std_iterator(std::string::const_iterator pos) G_GNUC_P
  * You can find a detailed UTF-8 and %Unicode FAQ here:
  * http://www.cl.cam.ac.uk/~mgk25/unicode.html
  *
- * @par Glib::ustring vs. std::string
+ * @par ltw8::ustring vs. std::string
  * @par
- * Glib::ustring has implicit type conversions to and from std::string.
+ * ltw8::ustring has implicit type conversions to and from std::string.
  * These conversions do @em not convert to/from the current locale (see
- * Glib::locale_from_utf8() and Glib::locale_to_utf8() if you need that).  You
- * can always use std::string instead of Glib::ustring&nbsp;-- however, using
+ * ltw8::locale_from_utf8() and ltw8::locale_to_utf8() if you need that).  You
+ * can always use std::string instead of ltw8::ustring&nbsp;-- however, using
  * std::string with multi-byte characters is quite hard.  For instance,
  * <tt>std::string::operator[]</tt> might return a byte in the middle of a
  * character, and <tt>std::string::length()</tt> returns the number of bytes
  * rather than characters.  So don't do that without a good reason.
  * @par
- * Many member functions and operators of Glib::ustring and Glib::ustring_Iterator
+ * Many member functions and operators of ltw8::ustring and ltw8::ustring_Iterator
  * assume that the string contains only valid UTF-8 data. If it does not, memory
  * outside the bounds of the string can be accessed.
  * @par
@@ -174,7 +174,7 @@ gunichar get_unichar_from_std_iterator(std::string::const_iterator pos) G_GNUC_P
  * that std::wstring is not a UTF-8 string class because it contains only
  * fixed-width characters (where width could be 32, 16, or even 8 bits).
  *
- * @par Glib::ustring and stream input/output
+ * @par ltw8::ustring and stream input/output
  * @par
  * The stream I/O operators, that is operator<<() and operator>>(), perform
  * implicit charset conversion to/from the current locale.  If that's not
@@ -187,7 +187,7 @@ gunichar get_unichar_from_std_iterator(std::string::const_iterator pos) G_GNUC_P
  * std::locale::global(std::locale("")); // set the global locale to the user's preferred locale
  * std::ostringstream output;
  * output << percentage << " % done";
- * label->set_text(Glib::locale_to_utf8(output.str()));
+ * label->set_text(ltw8::locale_to_utf8(output.str()));
  * @endcode
  *
  * @par Formatted output and internationalization
@@ -196,7 +196,7 @@ gunichar get_unichar_from_std_iterator(std::string::const_iterator pos) G_GNUC_P
  * and powerful alternative to string streams, as shown in the example below.
  * Refer to the method documentation of compose() and format() for details.
  * @code
- * using Glib::ustring;
+ * using ltw8::ustring;
  *
  * ustring message = ustring::compose("%1 is lower than 0x%2.",
  *                                    12, ustring::format(std::hex, 16));
@@ -204,7 +204,7 @@ gunichar get_unichar_from_std_iterator(std::string::const_iterator pos) G_GNUC_P
  *
  * @par Implementation notes
  * @par
- * Glib::ustring does not inherit from std::string, because std::string was
+ * ltw8::ustring does not inherit from std::string, because std::string was
  * intended to be a final class.  For instance, it does not have a virtual
  * destructor.  Also, a HAS-A relationship is more appropriate because
  * ustring can't just enhance the std::string interface.  Rather, it has to
@@ -639,14 +639,14 @@ public:
    * reordered.
    * @par Example:
    * @code
-   * using Glib::ustring;
+   * using ltw8::ustring;
    * const int percentage = 50;
    * const ustring text = ustring::compose("%1%% done", percentage);
    * @endcode
    * @param fmt A template string in <tt>qt-format</tt>.
    * @param a1 The argument to substitute for <tt>"%1"</tt>.
    * @return The substituted message string.
-   * @throw Glib::ConvertError
+   * @throw ltw8::ConvertError
    *
    * @newin{2,16}
    */
@@ -716,7 +716,7 @@ public:
    * in conjunction with compose() to facilitate localization of user-visible
    * messages.
    * @code
-   * using Glib::ustring;
+   * using ltw8::ustring;
    * double value = 22.0 / 7.0;
    * ustring text = ustring::format(std::fixed, std::setprecision(2), value);
    * @endcode
@@ -727,14 +727,14 @@ public:
    * must be of type <tt>wchar_t</tt>.  This can be achieved by using the
    * <tt>L</tt> prefix with a character literal, as shown in the example.
    * @code
-   * using Glib::ustring;
+   * using ltw8::ustring;
    * // Insert leading zeroes to fill in at least six digits
    * ustring text = ustring::format(std::setfill(L'0'), std::setw(6), 123);
    * @endcode
    *
    * @param a1 A streamable value or an I/O manipulator.
    * @return The string representation of the argument stream.
-   * @throw Glib::ConvertError
+   * @throw ltw8::ConvertError
    *
    * @newin{2,16}
    */
@@ -801,7 +801,7 @@ private:
 #ifdef GLIBMM_HAVE_STD_ITERATOR_TRAITS
   template <class In, class ValueType = typename std::iterator_traits<In>::value_type>
 #else
-  template <class In, class ValueType = typename Glib::IteratorTraits<In>::value_type>
+  template <class In, class ValueType = typename ltw8::IteratorTraits<In>::value_type>
 #endif
   struct SequenceToString;
 
@@ -843,15 +843,15 @@ struct ustring::SequenceToString<In, gunichar> : public std::string
 };
 
 template <>
-struct ustring::SequenceToString<Glib::ustring::iterator, gunichar> : public std::string
+struct ustring::SequenceToString<ltw8::ustring::iterator, gunichar> : public std::string
 {
-  SequenceToString(Glib::ustring::iterator pbegin, Glib::ustring::iterator pend);
+  SequenceToString(ltw8::ustring::iterator pbegin, ltw8::ustring::iterator pend);
 };
 
 template <>
-struct ustring::SequenceToString<Glib::ustring::const_iterator, gunichar> : public std::string
+struct ustring::SequenceToString<ltw8::ustring::const_iterator, gunichar> : public std::string
 {
-  SequenceToString(Glib::ustring::const_iterator pbegin, Glib::ustring::const_iterator pend);
+  SequenceToString(ltw8::ustring::const_iterator pbegin, ltw8::ustring::const_iterator pend);
 };
 
 class ustring::FormatStream
@@ -887,28 +887,28 @@ public:
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
 /** Stream input operator.
- * @relates Glib::ustring
- * @throw Glib::ConvertError
+ * @relates ltw8::ustring
+ * @throw ltw8::ConvertError
  */
-std::istream& operator>>(std::istream& is, Glib::ustring& utf8_string);
+std::istream& operator>>(std::istream& is, ltw8::ustring& utf8_string);
 
 /** Stream output operator.
- * @relates Glib::ustring
- * @throw Glib::ConvertError
+ * @relates ltw8::ustring
+ * @throw ltw8::ConvertError
  */
-std::ostream& operator<<(std::ostream& os, const Glib::ustring& utf8_string);
+std::ostream& operator<<(std::ostream& os, const ltw8::ustring& utf8_string);
 
 #ifdef GLIBMM_HAVE_WIDE_STREAM
 
 /** Wide stream input operator.
- * @relates Glib::ustring
- * @throw Glib::ConvertError
+ * @relates ltw8::ustring
+ * @throw ltw8::ConvertError
  */
 std::wistream& operator>>(std::wistream& is, ustring& utf8_string);
 
 /** Wide stream output operator.
- * @relates Glib::ustring
- * @throw Glib::ConvertError
+ * @relates ltw8::ustring
+ * @throw ltw8::ConvertError
  */
 std::wostream& operator<<(std::wostream& os, const ustring& utf8_string);
 
@@ -920,7 +920,7 @@ std::wostream& operator<<(std::wostream& os, const ustring& utf8_string);
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-/**** Glib::ustring_Iterator<> *********************************************/
+/**** ltw8::ustring_Iterator<> *********************************************/
 
 template <class T>
 inline ustring_Iterator<T>::ustring_Iterator(T pos) : pos_(pos)
@@ -948,7 +948,7 @@ inline ustring_Iterator<T>::ustring_Iterator(const ustring_Iterator<std::string:
 template <class T>
 inline typename ustring_Iterator<T>::value_type ustring_Iterator<T>::operator*() const
 {
-  return Glib::get_unichar_from_std_iterator(pos_);
+  return ltw8::get_unichar_from_std_iterator(pos_);
 }
 
 template <class T>
@@ -987,51 +987,51 @@ inline const ustring_Iterator<T> ustring_Iterator<T>::operator--(int)
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/** @relates Glib::ustring_Iterator */
+/** @relates ltw8::ustring_Iterator */
 inline bool
-operator==(const Glib::ustring::const_iterator& lhs, const Glib::ustring::const_iterator& rhs)
+operator==(const ltw8::ustring::const_iterator& lhs, const ltw8::ustring::const_iterator& rhs)
 {
   return (lhs.base() == rhs.base());
 }
 
-/** @relates Glib::ustring_Iterator */
+/** @relates ltw8::ustring_Iterator */
 inline bool
-operator!=(const Glib::ustring::const_iterator& lhs, const Glib::ustring::const_iterator& rhs)
+operator!=(const ltw8::ustring::const_iterator& lhs, const ltw8::ustring::const_iterator& rhs)
 {
   return (lhs.base() != rhs.base());
 }
 
-/** @relates Glib::ustring_Iterator */
+/** @relates ltw8::ustring_Iterator */
 inline bool
-operator<(const Glib::ustring::const_iterator& lhs, const Glib::ustring::const_iterator& rhs)
+operator<(const ltw8::ustring::const_iterator& lhs, const ltw8::ustring::const_iterator& rhs)
 {
   return (lhs.base() < rhs.base());
 }
 
-/** @relates Glib::ustring_Iterator */
+/** @relates ltw8::ustring_Iterator */
 inline bool
-operator>(const Glib::ustring::const_iterator& lhs, const Glib::ustring::const_iterator& rhs)
+operator>(const ltw8::ustring::const_iterator& lhs, const ltw8::ustring::const_iterator& rhs)
 {
   return (lhs.base() > rhs.base());
 }
 
-/** @relates Glib::ustring_Iterator */
+/** @relates ltw8::ustring_Iterator */
 inline bool
-operator<=(const Glib::ustring::const_iterator& lhs, const Glib::ustring::const_iterator& rhs)
+operator<=(const ltw8::ustring::const_iterator& lhs, const ltw8::ustring::const_iterator& rhs)
 {
   return (lhs.base() <= rhs.base());
 }
 
-/** @relates Glib::ustring_Iterator */
+/** @relates ltw8::ustring_Iterator */
 inline bool
-operator>=(const Glib::ustring::const_iterator& lhs, const Glib::ustring::const_iterator& rhs)
+operator>=(const ltw8::ustring::const_iterator& lhs, const ltw8::ustring::const_iterator& rhs)
 {
   return (lhs.base() >= rhs.base());
 }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-/**** Glib::ustring::SequenceToString **************************************/
+/**** ltw8::ustring::SequenceToString **************************************/
 
 template <class In>
 ustring::SequenceToString<In, char>::SequenceToString(In pbegin, In pend)
@@ -1051,7 +1051,7 @@ ustring::SequenceToString<In, gunichar>::SequenceToString(In pbegin, In pend)
   }
 }
 
-/**** Glib::ustring::FormatStream ******************************************/
+/**** ltw8::ustring::FormatStream ******************************************/
 
 template <class T>
 inline void
@@ -1072,10 +1072,10 @@ ustring::FormatStream::stream(char* value)
   stream_ << ustring(value);
 }
 
-/**** Glib::ustring ********************************************************/
+/**** ltw8::ustring ********************************************************/
 
 template <class In>
-ustring::ustring(In pbegin, In pend) : string_(Glib::ustring::SequenceToString<In>(pbegin, pend))
+ustring::ustring(In pbegin, In pend) : string_(ltw8::ustring::SequenceToString<In>(pbegin, pend))
 {
 }
 
@@ -1083,7 +1083,7 @@ template <class In>
 ustring&
 ustring::assign(In pbegin, In pend)
 {
-  Glib::ustring::SequenceToString<In> temp_string(pbegin, pend);
+  ltw8::ustring::SequenceToString<In> temp_string(pbegin, pend);
   string_.swap(temp_string); // constant-time operation
   return *this;
 }
@@ -1092,7 +1092,7 @@ template <class In>
 ustring&
 ustring::append(In pbegin, In pend)
 {
-  string_.append(Glib::ustring::SequenceToString<In>(pbegin, pend));
+  string_.append(ltw8::ustring::SequenceToString<In>(pbegin, pend));
   return *this;
 }
 
@@ -1100,14 +1100,14 @@ template <class In>
 void
 ustring::insert(ustring::iterator p, In pbegin, In pend)
 {
-  string_.insert(p.base(), Glib::ustring::SequenceToString<In>(pbegin, pend));
+  string_.insert(p.base(), ltw8::ustring::SequenceToString<In>(pbegin, pend));
 }
 
 template <class In>
 ustring&
 ustring::replace(ustring::iterator pbegin, ustring::iterator pend, In pbegin2, In pend2)
 {
-  string_.replace(pbegin.base(), pend.base(), Glib::ustring::SequenceToString<In>(pbegin2, pend2));
+  string_.replace(pbegin.base(), pend.base(), ltw8::ustring::SequenceToString<In>(pbegin2, pend2));
   return *this;
 }
 
@@ -1491,135 +1491,135 @@ inline // static
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline void
 swap(ustring& lhs, ustring& rhs)
 {
   lhs.swap(rhs);
 }
 
-/**** Glib::ustring -- comparison operators ********************************/
+/**** ltw8::ustring -- comparison operators ********************************/
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator==(const ustring& lhs, const ustring& rhs)
 {
   return (lhs.compare(rhs) == 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator==(const ustring& lhs, const char* rhs)
 {
   return (lhs.compare(rhs) == 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator==(const char* lhs, const ustring& rhs)
 {
   return (rhs.compare(lhs) == 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator!=(const ustring& lhs, const ustring& rhs)
 {
   return (lhs.compare(rhs) != 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator!=(const ustring& lhs, const char* rhs)
 {
   return (lhs.compare(rhs) != 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator!=(const char* lhs, const ustring& rhs)
 {
   return (rhs.compare(lhs) != 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator<(const ustring& lhs, const ustring& rhs)
 {
   return (lhs.compare(rhs) < 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator<(const ustring& lhs, const char* rhs)
 {
   return (lhs.compare(rhs) < 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator<(const char* lhs, const ustring& rhs)
 {
   return (rhs.compare(lhs) > 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator>(const ustring& lhs, const ustring& rhs)
 {
   return (lhs.compare(rhs) > 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator>(const ustring& lhs, const char* rhs)
 {
   return (lhs.compare(rhs) > 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator>(const char* lhs, const ustring& rhs)
 {
   return (rhs.compare(lhs) < 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator<=(const ustring& lhs, const ustring& rhs)
 {
   return (lhs.compare(rhs) <= 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator<=(const ustring& lhs, const char* rhs)
 {
   return (lhs.compare(rhs) <= 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator<=(const char* lhs, const ustring& rhs)
 {
   return (rhs.compare(lhs) >= 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator>=(const ustring& lhs, const ustring& rhs)
 {
   return (lhs.compare(rhs) >= 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator>=(const ustring& lhs, const char* rhs)
 {
   return (lhs.compare(rhs) >= 0);
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline bool
 operator>=(const char* lhs, const ustring& rhs)
 {
@@ -1645,9 +1645,9 @@ bool operator>=(const ustring& lhs, int rhs) = delete;
 bool operator>=(int lhs, const ustring& rhs) = delete;
 #endif // DOXYGEN_SHOULD_SKIP_THIS
 
-/**** Glib::ustring -- concatenation operators *****************************/
+/**** ltw8::ustring -- concatenation operators *****************************/
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline ustring
 operator+(const ustring& lhs, const ustring& rhs)
 {
@@ -1656,7 +1656,7 @@ operator+(const ustring& lhs, const ustring& rhs)
   return temp;
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline ustring
 operator+(const ustring& lhs, const char* rhs)
 {
@@ -1665,7 +1665,7 @@ operator+(const ustring& lhs, const char* rhs)
   return temp;
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline ustring
 operator+(const char* lhs, const ustring& rhs)
 {
@@ -1674,7 +1674,7 @@ operator+(const char* lhs, const ustring& rhs)
   return temp;
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline ustring
 operator+(const ustring& lhs, gunichar rhs)
 {
@@ -1683,7 +1683,7 @@ operator+(const ustring& lhs, gunichar rhs)
   return temp;
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline ustring
 operator+(gunichar lhs, const ustring& rhs)
 {
@@ -1692,7 +1692,7 @@ operator+(gunichar lhs, const ustring& rhs)
   return temp;
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline ustring
 operator+(const ustring& lhs, char rhs)
 {
@@ -1701,7 +1701,7 @@ operator+(const ustring& lhs, char rhs)
   return temp;
 }
 
-/** @relates Glib::ustring */
+/** @relates ltw8::ustring */
 inline ustring
 operator+(char lhs, const ustring& rhs)
 {
@@ -1710,6 +1710,6 @@ operator+(char lhs, const ustring& rhs)
   return temp;
 }
 
-} // namespace Glib
+} // namespace ltw8
 
 #endif /* _GLIBMM_USTRING_H */

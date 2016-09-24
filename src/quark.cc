@@ -1,8 +1,6 @@
-// -*- c++ -*-
-#ifndef _GLIBMM_EXCEPTIONHANDLER_H
-#define _GLIBMM_EXCEPTIONHANDLER_H
+/* $Id$ */
 
-/* exceptionhandler.h
+/* quark.cc
  *
  * Copyright 2002 The gtkmm Development Team
  *
@@ -21,21 +19,48 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-//#include <glibmmconfig.h>
-#include <sigc++/sigc++.h>
+#include <quark.h>
 
 namespace ltw8
 {
 
-/** Specify a slot to be called when an exception is thrown by a signal handler.
- */
-sigc::connection add_exception_handler(const sigc::slot<void>& slot);
+QueryQuark::QueryQuark(const GQuark& q) : quark_(q)
+{
+}
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-// internal
-void exception_handlers_invoke() noexcept;
-#endif // DOXYGEN_SHOULD_SKIP_THIS
+QueryQuark::QueryQuark(const ustring& s) : quark_(g_quark_try_string(s.c_str()))
+{
+}
 
-} // namespace ltw8
+QueryQuark::QueryQuark(const char* s) : quark_(g_quark_try_string(s))
+{
+}
 
-#endif /* _GLIBMM_EXCEPTIONHANDLER_H */
+QueryQuark&
+QueryQuark::operator=(const QueryQuark& q)
+{
+  quark_ = q.quark_;
+  return *this;
+}
+
+QueryQuark::operator ustring() const
+{
+  return ustring(g_quark_to_string(quark_));
+}
+
+Quark::Quark(const ustring& s) : QueryQuark(g_quark_from_string(s.c_str()))
+{
+}
+
+Quark::Quark(const char* s) : QueryQuark(g_quark_from_string(s))
+{
+}
+
+Quark::~Quark() noexcept
+{
+}
+
+GQuark quark_ = 0;
+GQuark quark_cpp_wrapper_deleted_ = 0;
+
+} /* namespace ltw8 */

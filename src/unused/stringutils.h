@@ -21,9 +21,9 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmm/ustring.h>
+#include "ltw8_ustring.h"
 
-namespace Glib
+namespace ltw8
 {
 
 /** @defgroup StringUtils String Utility Functions
@@ -62,7 +62,7 @@ namespace Ascii
  * user you should normally use locale-sensitive C++ streams.
  *
  * To convert from a string to <tt>double</tt> in a locale-insensitive way, use
- * Glib::Ascii::dtostr().
+ * ltw8::Ascii::dtostr().
  *
  * @param str The string to convert to a numeric value.
  * @return The <tt>double</tt> value.
@@ -82,7 +82,7 @@ double strtod(const std::string& str);
  * user you should normally use locale-sensitive C++ streams.
  *
  * To convert from a string to <tt>double</tt> in a locale-insensitive way, use
- * Glib::Ascii::dtostr().
+ * ltw8::Ascii::dtostr().
  *
  * @param str The string to convert to a numeric value.
  * @param start_index The index of the first character that should be used in the conversion.
@@ -98,7 +98,7 @@ double strtod(const std::string& str, std::string::size_type& end_index,
 /** Converts a <tt>double</tt> to a string, using the @c '.' as decimal point.
  * @ingroup StringUtils
  * This functions generates enough precision that converting the string back
- * using Glib::Ascii::strtod() gives the same machine-number (on machines with
+ * using ltw8::Ascii::strtod() gives the same machine-number (on machines with
  * IEEE compatible 64bit doubles).
  *
  * @param d The <tt>double</tt> value to convert.
@@ -117,7 +117,7 @@ std::string dtostr(double d);
  * and in the range <tt>0x80</tt>&nbsp;-&nbsp;<tt>0xFF</tt> (all non-ASCII chars)
  * are replaced with a <tt>'\\'</tt> followed by their octal representation.
  *
- * Glib::strcompress() does the reverse conversion.
+ * ltw8::strcompress() does the reverse conversion.
  *
  * @param source A string to escape.
  * @return A copy of @a source with certain characters escaped. See above.
@@ -134,7 +134,7 @@ std::string strescape(const std::string& source);
  * are replaced with a <tt>'\\'</tt> followed by their octal representation.
  * Characters supplied in @a exceptions are not escaped.
  *
- * Glib::strcompress() does the reverse conversion.
+ * ltw8::strcompress() does the reverse conversion.
  *
  * @param source A string to escape.
  * @param exceptions A string of characters not to escape in @a source.
@@ -144,7 +144,7 @@ std::string strescape(const std::string& source, const std::string& exceptions);
 
 /** Replaces all escaped characters with their one byte equivalent.
  * @ingroup StringUtils
- * This function does the reverse conversion of Glib::strescape().
+ * This function does the reverse conversion of ltw8::strescape().
  *
  * @param source A string to compress.
  * @return A copy of @a source with all escaped characters compressed.
@@ -160,7 +160,7 @@ std::string strcompress(const std::string& source);
  * @return A string describing the error code. If the error code is unknown,
  * <tt>&quot;unknown error (<em>\<errnum\></em>)&quot;</tt> is returned.
  */
-Glib::ustring strerror(int errnum);
+ltw8::ustring strerror(int errnum);
 
 /** Returns a string describing the given signal, e.g.\ <tt>"Segmentation fault"</tt>.
  * @ingroup StringUtils
@@ -171,8 +171,8 @@ Glib::ustring strerror(int errnum);
  * @return A string describing the signal. If the signal is unknown,
  * <tt>&quot;unknown signal (<em>\<signum\></em>)&quot;</tt> is returned.
  */
-Glib::ustring strsignal(int signum);
+ltw8::ustring strsignal(int signum);
 
-} // namespace Glib
+} // namespace ltw8
 
 #endif /* _GLIBMM_STRINGUTILS_H */

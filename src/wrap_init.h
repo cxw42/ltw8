@@ -23,11 +23,7 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
-#include <glibmm/error.h>
-#else //ltw8
-#include "error.h"
-#endif
+#include <error.h>
 
 namespace ltw8
 {

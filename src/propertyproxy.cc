@@ -1,8 +1,7 @@
 // -*- c++ -*-
-#ifndef _GLIBMM_EXCEPTIONHANDLER_H
-#define _GLIBMM_EXCEPTIONHANDLER_H
+/* $Id$ */
 
-/* exceptionhandler.h
+/* propertyproxy.cc
  *
  * Copyright 2002 The gtkmm Development Team
  *
@@ -21,21 +20,4 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-//#include <glibmmconfig.h>
-#include <sigc++/sigc++.h>
-
-namespace ltw8
-{
-
-/** Specify a slot to be called when an exception is thrown by a signal handler.
- */
-sigc::connection add_exception_handler(const sigc::slot<void>& slot);
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-// internal
-void exception_handlers_invoke() noexcept;
-#endif // DOXYGEN_SHOULD_SKIP_THIS
-
-} // namespace ltw8
-
-#endif /* _GLIBMM_EXCEPTIONHANDLER_H */
+#include <propertyproxy.h>

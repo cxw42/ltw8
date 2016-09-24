@@ -1,11 +1,5 @@
-// -*- c++ -*-
-#ifndef LTW8_EXCEPTION_H_
-#define LTW8_EXCEPTION_H_
-/* $Id$ */
-
-/* exception.h
- *
- * Copyright 2002 The gtkmm Development Team
+/*
+ * Copyright 2014 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -18,23 +12,26 @@
  * Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free
- * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "ltw8_ustring.h"
+#include <glib.h>
 
 namespace ltw8
 {
 
-class Exception
+bool
+VariantDict::lookup_value_variant(
+  const ltw8::ustring& key, const VariantType& expected_type, VariantBase& value) const
 {
-public:
-  virtual ~Exception() noexcept = 0;
-  virtual ltw8::ustring what() const = 0;
-};
+  GVariant* const g_value = g_variant_dict_lookup_value(
+    const_cast<GVariantDict*>(gobj()), key.c_str(), expected_type.gobj());
+  if (!g_value)
+    return false;
+
+  value.init(g_value); // g_value is already referenced.
+  return true;
+}
 
 } // namespace ltw8
-
-#endif /* LTW8_EXCEPTION_H_ */
-

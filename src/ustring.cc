@@ -21,20 +21,16 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifdef DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
-#include <glibmmconfig.h>
-#include <glibmm/ustring.h>
-#include <glibmm/convert.h>
-#include <glibmm/error.h>
-#include <glibmm/utility.h>
-#else
+//#include <glibmmconfig.h>
+#include "ltw8_ustring.h"
+#include <convert.h>
+#include <error.h>
+#include <utility.h>
 #include <glib.h>
 #include "ltw8.h"
 #include "ltw8_unicode.h"
 //#include "ltw8_unicode_enums.h"
 #include "ltw8_ustring.h"
-#include "error.h"
-#endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 
 #include <algorithm>
 #include <iostream>
