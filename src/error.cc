@@ -25,6 +25,8 @@
 #else //ltw8
 #include "error.h"
 #include "ltw8_implementation.h"
+#include "wrap.h"
+#include "wrap_init.h"
 #endif // DO_NOT_DEFINE_OR_A_BLACK_HOLE_WILL_DESTROY_HAWAII
 #include <glib.h>
 #include <map>

@@ -1,0 +1,20 @@
+#include <glibmm/convert.h> src
+#include <glibmm/error.h> - pulled in
+#include <glibmm/exception.h> - pulled in
+#include <glibmm/exceptionhandler.h> - pulled in
+
+// TODO grab this chunk via upstream_gnome
+#include <glibmm/object.h>
+#include <glibmm/objectbase.h>
+#include <glibmm/quark.h>
+#include <glibmm/refptr.h>
+#include <glibmm/stringutils.h>
+
+#include <glibmm/threads.h> src
+#include <glibmm/unicode.h> src
+#include <glibmm/ustring.h> - pulled in
+#include <glibmm/utility.h> glibmm
+#include <glibmm/wrap.h> glibmm - pulled in
+#include <glibmm/wrap_init.h> glibmm    - pulled in
+
+
