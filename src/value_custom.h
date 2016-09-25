@@ -1,3 +1,6 @@
+// -*- c++ -*-
+/* $Id$ */
+
 /* Copyright 2002 The gtkmm Development Team
  *
  * This library is free software; you can redistribute it and/or
@@ -33,18 +36,21 @@ namespace ltw8
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-extern "C" {
-typedef void (*ValueInitFunc)(GValue*);
-typedef void (*ValueFreeFunc)(GValue*);
-typedef void (*ValueCopyFunc)(const GValue*, GValue*);
+extern "C"
+{
+  typedef void (* ValueInitFunc) (GValue*);
+  typedef void (* ValueFreeFunc) (GValue*);
+  typedef void (* ValueCopyFunc) (const GValue*, GValue*);
 }
 
 /* When using ltw8::Value<T> with custom types, each T will be registered
  * as subtype of G_TYPE_BOXED, via this function.  The type_name argument
  * should be the C++ RTTI name.
  */
-GType custom_boxed_type_register(
-  const char* type_name, ValueInitFunc init_func, ValueFreeFunc free_func, ValueCopyFunc copy_func);
+GType custom_boxed_type_register(const char*   type_name,
+                                 ValueInitFunc init_func,
+                                 ValueFreeFunc free_func,
+                                 ValueCopyFunc copy_func);
 
 /* When using ltw8::Value<T*> or ltw8::Value<const T*> with custom types,
  * each T* or const T* will be registered as a subtype of G_TYPE_POINTER,
@@ -54,6 +60,7 @@ GType custom_pointer_type_register(const char* type_name);
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
+
 /**
  * @ingroup glibmmValue
  */
@@ -61,8 +68,8 @@ template <class T, class PtrT>
 class Value_Pointer : public ValueBase_Object
 {
 public:
-  using CppType = PtrT;
-  using CType = void*;
+  typedef PtrT  CppType;
+  typedef void* CType;
 
   static inline GType value_type() G_GNUC_CONST;
 
@@ -70,7 +77,8 @@ public:
   inline CppType get() const;
 
 private:
-  inline static GType value_type_(ltw8::Object*);
+  inline
+  static GType value_type_(ltw8::Object*);
   static GType value_type_(void*);
 
   inline void set_(CppType data, ltw8::Object*);
@@ -79,6 +87,7 @@ private:
   inline CppType get_(ltw8::Object*) const;
   inline CppType get_(void*) const;
 };
+
 
 /** Generic value implementation for custom types.
  * @ingroup glibmmValue
@@ -100,8 +109,8 @@ template <class T>
 class Value : public ValueBase_Boxed
 {
 public:
-  using CppType = T;
-  using CType = T*;
+  typedef T  CppType;
+  typedef T* CType;
 
   static GType value_type() G_GNUC_CONST;
 
@@ -116,15 +125,15 @@ private:
   static void value_copy_func(const GValue* src_value, GValue* dest_value);
 };
 
+
 /** Specialization for pointers to instances of any type.
  * @ingroup glibmmValue
  * No attempt is made to manage the memory associated with the
  * pointer, you must take care of that yourself.
  */
 template <class T>
-class Value<T*> : public Value_Pointer<T, T*>
-{
-};
+class Value<T*> : public Value_Pointer<T,T*>
+{};
 
 /** Specialization for pointers to const instances of any type.
  * @ingroup glibmmValue
@@ -132,9 +141,9 @@ class Value<T*> : public Value_Pointer<T, T*>
  * pointer, you must take care of that yourself.
  */
 template <class T>
-class Value<const T*> : public Value_Pointer<T, const T*>
-{
-};
+class Value<const T*> : public Value_Pointer<T,const T*>
+{};
+
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -143,55 +152,49 @@ class Value<const T*> : public Value_Pointer<T, const T*>
 /** Implementation for ltw8::Object pointers **/
 
 // static
-template <class T, class PtrT>
-inline GType
-Value_Pointer<T, PtrT>::value_type_(ltw8::Object*)
+template <class T, class PtrT> inline
+GType Value_Pointer<T,PtrT>::value_type_(ltw8::Object*)
 {
   return T::get_base_type();
 }
 
-template <class T, class PtrT>
-inline void
-Value_Pointer<T, PtrT>::set_(PtrT data, ltw8::Object*)
+template <class T, class PtrT> inline
+void Value_Pointer<T,PtrT>::set_(PtrT data, ltw8::Object*)
 {
   set_object(const_cast<T*>(data));
 }
 
-// More spec-compliant compilers (such as Tru64) need this to be near ltw8::Object instead.
+//More spec-compliant compilers (such as Tru64) need this to be near ltw8::Object instead.
 #ifdef GLIBMM_CAN_USE_DYNAMIC_CAST_IN_UNUSED_TEMPLATE_WITHOUT_DEFINITION
-template <class T, class PtrT>
-inline PtrT
-Value_Pointer<T, PtrT>::get_(ltw8::Object*) const
+template <class T, class PtrT> inline
+PtrT Value_Pointer<T,PtrT>::get_(ltw8::Object*) const
 {
   return dynamic_cast<T*>(get_object());
 }
-#endif // GLIBMM_CAN_USE_DYNAMIC_CAST_IN_UNUSED_TEMPLATE_WITHOUT_DEFINITION
+#endif //GLIBMM_CAN_USE_DYNAMIC_CAST_IN_UNUSED_TEMPLATE_WITHOUT_DEFINITION
 
 /** Implementation for custom pointers **/
 
 // static
 template <class T, class PtrT>
-GType
-Value_Pointer<T, PtrT>::value_type_(void*)
+GType Value_Pointer<T,PtrT>::value_type_(void*)
 {
   static GType custom_type = 0;
 
-  if (!custom_type)
+  if(!custom_type)
     custom_type = ltw8::custom_pointer_type_register(typeid(PtrT).name());
 
   return custom_type;
 }
 
-template <class T, class PtrT>
-inline void
-Value_Pointer<T, PtrT>::set_(PtrT data, void*)
+template <class T, class PtrT> inline
+void Value_Pointer<T,PtrT>::set_(PtrT data, void*)
 {
   gobject_.data[0].v_pointer = const_cast<T*>(data);
 }
 
-template <class T, class PtrT>
-inline PtrT
-Value_Pointer<T, PtrT>::get_(void*) const
+template <class T, class PtrT> inline
+PtrT Value_Pointer<T,PtrT>::get_(void*) const
 {
   return static_cast<T*>(gobject_.data[0].v_pointer);
 }
@@ -199,29 +202,27 @@ Value_Pointer<T, PtrT>::get_(void*) const
 /** Public forwarding interface **/
 
 // static
-template <class T, class PtrT>
-inline GType
-Value_Pointer<T, PtrT>::value_type()
+template <class T, class PtrT> inline
+GType Value_Pointer<T,PtrT>::value_type()
 {
   // Dispatch to the specific value_type_() overload.
-  return Value_Pointer<T, PtrT>::value_type_(static_cast<T*>(nullptr));
+  return Value_Pointer<T,PtrT>::value_type_(static_cast<T*>(0));
 }
 
-template <class T, class PtrT>
-inline void
-Value_Pointer<T, PtrT>::set(PtrT data)
+template <class T, class PtrT> inline
+void Value_Pointer<T,PtrT>::set(PtrT data)
 {
   // Dispatch to the specific set_() overload.
-  this->set_(data, static_cast<T*>(nullptr));
+  this->set_(data, static_cast<T*>(0));
 }
 
-template <class T, class PtrT>
-inline PtrT
-Value_Pointer<T, PtrT>::get() const
+template <class T, class PtrT> inline
+PtrT Value_Pointer<T,PtrT>::get() const
 {
   // Dispatch to the specific get_() overload.
-  return this->get_(static_cast<T*>(nullptr));
+  return this->get_(static_cast<T*>(0));
 }
+
 
 /**** ltw8::Value<T> *******************************************************/
 
@@ -229,17 +230,15 @@ Value_Pointer<T, PtrT>::get() const
 template <class T>
 GType Value<T>::custom_type_ = 0;
 
-template <class T>
-inline void
-Value<T>::set(const typename Value<T>::CppType& data)
+template <class T> inline
+void Value<T>::set(const typename Value<T>::CppType& data)
 {
   // Assume the value is already default-initialized.  See value_init_func().
   *static_cast<T*>(gobject_.data[0].v_pointer) = data;
 }
 
-template <class T>
-inline typename Value<T>::CppType
-Value<T>::get() const
+template <class T> inline
+typename Value<T>::CppType Value<T>::get() const
 {
   // Assume the pointer is not NULL.  See value_init_func().
   return *static_cast<T*>(gobject_.data[0].v_pointer);
@@ -247,42 +246,41 @@ Value<T>::get() const
 
 // static
 template <class T>
-GType
-Value<T>::value_type()
+GType Value<T>::value_type()
 {
-  if (!custom_type_)
+  if(!custom_type_)
   {
-    custom_type_ = ltw8::custom_boxed_type_register(typeid(CppType).name(),
-      &Value<T>::value_init_func, &Value<T>::value_free_func, &Value<T>::value_copy_func);
+    custom_type_ = ltw8::custom_boxed_type_register(
+        typeid(CppType).name(),
+        &Value<T>::value_init_func,
+        &Value<T>::value_free_func,
+        &Value<T>::value_copy_func);
   }
   return custom_type_;
 }
 
 // static
 template <class T>
-void
-Value<T>::value_init_func(GValue* value)
+void Value<T>::value_init_func(GValue* value)
 {
   // Never store a NULL pointer (unless we're out of memory).
-  value->data[0].v_pointer = new (std::nothrow) T();
+  value->data[0].v_pointer = new(std::nothrow) T();
 }
 
 // static
 template <class T>
-void
-Value<T>::value_free_func(GValue* value)
+void Value<T>::value_free_func(GValue* value)
 {
   delete static_cast<T*>(value->data[0].v_pointer);
 }
 
 // static
 template <class T>
-void
-Value<T>::value_copy_func(const GValue* src_value, GValue* dest_value)
+void Value<T>::value_copy_func(const GValue* src_value, GValue* dest_value)
 {
   // Assume the source is not NULL.  See value_init_func().
   const T& source = *static_cast<T*>(src_value->data[0].v_pointer);
-  dest_value->data[0].v_pointer = new (std::nothrow) T(source);
+  dest_value->data[0].v_pointer = new(std::nothrow) T(source);
 }
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */

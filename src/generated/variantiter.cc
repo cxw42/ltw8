@@ -27,7 +27,7 @@
 #include <glibmm/variant.h>
 #include <glib.h>
 
-namespace Glib
+namespace ltw8
 {
 
 VariantIter::VariantIter(const VariantBase& variant)
@@ -49,25 +49,25 @@ bool VariantIter::next_value(VariantBase& value)
     return false;
 }
 
-} //namespace Glib
+} //namespace ltw8
 
 namespace
 {
 } // anonymous namespace
 
 
-namespace Glib
+namespace ltw8
 {
 
-Glib::VariantIter wrap(GVariantIter* object, bool take_copy /* = false */)
+ltw8::VariantIter wrap(GVariantIter* object, bool take_copy /* = false */)
 {
-  return Glib::VariantIter(object, take_copy);
+  return ltw8::VariantIter(object, take_copy);
 }
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
 
@@ -156,6 +156,6 @@ gsize VariantIter::get_n_children() const
 }
 
 
-} // namespace Glib
+} // namespace ltw8
 
 

@@ -22,19 +22,19 @@
  */
 
 
-#include <glibmmconfig.h>
-#include <glibmm/varianttype.h>
-#include <glibmm/variantiter.h>
-#include <glibmm/refptr.h>
-#include <glibmm/ustring.h>
-#include <glibmm/error.h>
+//#include <glibmmconfig.h>
+#include <varianttype.h>
+#include <variantiter.h>
+#include <refptr.h>
+#include <ustring.h>
+#include <error.h>
 #include <utility>
 #include <vector>
 #include <map>
 #include <stdexcept>
 #include <typeinfo>
 
-namespace Glib
+namespace ltw8
 {
 class Bytes;
 
@@ -74,7 +74,7 @@ class Bytes;
 // Now (2014-01-30) it's also thrown by Gio::Action::parse_detailed_name().
 /** %Exception class for Variant parse errors.
  */
-class VariantParseError : public Glib::Error
+class VariantParseError : public ltw8::Error
 {
 public:
   /**  @var Code FAILED
@@ -157,7 +157,7 @@ public:
     VALUE_EXPECTED
   };
 
-  VariantParseError(Code error_code, const Glib::ustring& error_message);
+  VariantParseError(Code error_code, const ltw8::ustring& error_message);
   explicit VariantParseError(GError* gobject);
   Code code() const;
 
@@ -421,7 +421,7 @@ public:
    * 
    * @return A new Bytes representing the variant data.
    */
-  Glib::RefPtr<const Glib::Bytes> get_data_as_bytes() const;
+  ltw8::RefPtr<const ltw8::Bytes> get_data_as_bytes() const;
   
   /** Stores the serialised form of @a value at @a data.  @a data should be
    * large enough.  See g_variant_get_size().
@@ -456,7 +456,7 @@ public:
    * the output.
    * @return A newly-allocated string holding the result.
    */
-  Glib::ustring print(bool type_annotate =  false) const;
+  ltw8::ustring print(bool type_annotate =  false) const;
   
 
   /** Generates a hash value for a Variant instance.
@@ -556,7 +556,7 @@ public:
    * 
    * This function is meant to be used by functions that wish to provide
    * varargs accessors to Variant values of uncertain values (eg:
-   * g_variant_lookup() or Glib::menu_model_get_item_attribute()).
+   * g_variant_lookup() or ltw8::menu_model_get_item_attribute()).
    * 
    * @newin{2,34}
    * 
@@ -588,13 +588,13 @@ protected:
   /** Used by cast_dynamic().
    * In addition to an exact match, the following casts are possible:
    * - VARIANT_TYPE_OBJECT_PATH and VARIANT_TYPE_SIGNATURE can be cast to
-   *   VARIANT_TYPE_STRING (Glib::ustring).
+   *   VARIANT_TYPE_STRING (ltw8::ustring).
    * - VARIANT_TYPE_STRING, VARIANT_TYPE_OBJECT_PATH and VARIANT_TYPE_SIGNATURE
    *   can be cast to VARIANT_TYPE_BYTESTRING (std::string).
    * - VARIANT_TYPE_HANDLE can be cast to VARIANT_TYPE_INT32.
    *
    * These casts are possible also when they are parts of a more complicated type.
-   * E.g. in Variant<std::map<Glib::ustring, std::vector<std::string> > > the map's keys
+   * E.g. in Variant<std::map<ltw8::ustring, std::vector<std::string> > > the map's keys
    * can be VARIANT_TYPE_OBJECT_PATH and the vector's elements can be VARIANT_TYPE_SIGNATURE.
    * @newin{2,46}
    */
@@ -1008,18 +1008,18 @@ public:
   Variant<T> get() const;
 };
 
-/** Specialization of Variant containing a Glib::ustring, for variants of type
+/** Specialization of Variant containing a ltw8::ustring, for variants of type
  * string, object path, or signature.
  * @newin{2,28}
  * @ingroup Variant
  */
 template<>
-class Variant<Glib::ustring> : public VariantStringBase
+class Variant<ltw8::ustring> : public VariantStringBase
 {
   // Trick gmmproc into thinking this is derived from GVariant to wrap some methods.
   public:
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  typedef Variant<Glib::ustring> CppObjectType;
+  typedef Variant<ltw8::ustring> CppObjectType;
   typedef GVariant BaseObjectType;
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
@@ -1027,10 +1027,10 @@ private:
 
 public:
   typedef char*                 CType;
-  typedef Glib::ustring         CppType;
+  typedef ltw8::ustring         CppType;
 
   /// Default constructor.
-  Variant<Glib::ustring>();
+  Variant<ltw8::ustring>();
 
   /** GVariant constructor.
    * @param castitem The GVariant to wrap.
@@ -1038,7 +1038,7 @@ public:
    * GVariant or not (not taking one could destroy the GVariant with the
    * wrapper).
    */
-  explicit Variant<Glib::ustring>(GVariant* castitem,  bool take_a_reference = false);
+  explicit Variant<ltw8::ustring>(GVariant* castitem,  bool take_a_reference = false);
 
   /** Gets the VariantType.
    * @return The VariantType.
@@ -1046,31 +1046,31 @@ public:
    */
   static const VariantType& variant_type() G_GNUC_CONST;
 
-  /** Creates a new Variant<Glib::ustring>.
+  /** Creates a new Variant<ltw8::ustring>.
    * @param data The value of the new Variant.
    * @return The new Variant.
    * @newin{2,28}
    */
-  static Variant<Glib::ustring> create(const Glib::ustring& data);
+  static Variant<ltw8::ustring> create(const ltw8::ustring& data);
 
   //We can't use WRAP_METHOD() here because g_variant_get_string() takes an extra length parameter.
   /** Gets the contents of the Variant.
    * @return The contents of the Variant.
    * @newin{2,28}
    */
-  Glib::ustring get() const;
+  ltw8::ustring get() const;
   
 
 };
 
 //TODO: When we can break ABI, remove this template specialization.
 template<>
-Variant<Glib::ustring> VariantBase::cast_dynamic< Variant<Glib::ustring> >(const VariantBase& v)
+Variant<ltw8::ustring> VariantBase::cast_dynamic< Variant<ltw8::ustring> >(const VariantBase& v)
 throw(std::bad_cast);
 
 /** Specialization of Variant containing a std::string, for variants of type
  * bytestring, string, object path, or signature.
- * See also Variant<Glib::ustring> for UTF-8 strings.
+ * See also Variant<ltw8::ustring> for UTF-8 strings.
  * @newin{2,28}
  * @ingroup Variant
  */
@@ -1249,14 +1249,14 @@ public:
  * @ingroup Variant
  */
 template<>
-class Variant< std::vector<Glib::ustring> > : public VariantContainerBase
+class Variant< std::vector<ltw8::ustring> > : public VariantContainerBase
 {
 public:
-  typedef Glib::ustring                 CppType;
-  typedef std::vector<Glib::ustring>    CppContainerType;
+  typedef ltw8::ustring                 CppType;
+  typedef std::vector<ltw8::ustring>    CppContainerType;
 
   /// Default constructor.
-  Variant< std::vector<Glib::ustring> >();
+  Variant< std::vector<ltw8::ustring> >();
 
   /** GVariant constructor.
    * @param castitem The GVariant to wrap.
@@ -1264,7 +1264,7 @@ public:
    * GVariant or not (not taking one could destroy the GVariant with the
    * wrapper).
    */
-  explicit Variant< std::vector<Glib::ustring> >(GVariant* castitem, bool take_a_reference = false);
+  explicit Variant< std::vector<ltw8::ustring> >(GVariant* castitem, bool take_a_reference = false);
 
   /** Gets the VariantType.
    * @return The VariantType.
@@ -1277,8 +1277,8 @@ public:
    * @return The new Variant.
    * @newin{2,28}
    */
-  static Variant< std::vector<Glib::ustring> >
-    create(const std::vector<Glib::ustring>& data);
+  static Variant< std::vector<ltw8::ustring> >
+    create(const std::vector<ltw8::ustring>& data);
 
   /** Gets a specific element of the string array.  It is an error if @a index
    * is greater than the number of child items in the container.  See
@@ -1291,13 +1291,13 @@ public:
    * @throw std::out_of_range
    * @newin{2,28}
    */
-  Glib::ustring get_child(gsize index) const;
+  ltw8::ustring get_child(gsize index) const;
 
   /** Gets the string vector of the Variant.
    * @return The vector.
    * @newin{2,28}
    */
-  std::vector<Glib::ustring> get() const;
+  std::vector<ltw8::ustring> get() const;
   
 
   /** Gets a VariantIter of the Variant.
@@ -1458,7 +1458,7 @@ public:
   VariantIter get_iter() const;
 };
 
-} // namespace Glib
+} // namespace ltw8
 
 
 //We ignore g_variant_get_*() methods that are wrapped by Variant<> specializations, such as in variant_basictypes.h.m4.
@@ -1467,10 +1467,10 @@ public:
 /* Include generated specializations of Variant<> for fundamental types:
  */
 #define _GLIBMM_VARIANT_H_INCLUDE_VARIANT_BASICTYPES_H
-#include <glibmm/variant_basictypes.h>
+#include <variant_basictypes.h>
 #undef _GLIBMM_VARIANT_H_INCLUDE_VARIANT_BASICTYPES_H
 
-namespace Glib
+namespace ltw8
 {
 
 /*--------------------Variant< Variant<T> >---------------------*/
@@ -1576,7 +1576,7 @@ Variant< std::vector<T> >::create(const std::vector<T>& data)
   // Add the elements of the vector into the builder.
   for(const auto& element : data)
   {
-    Glib::Variant<T> variant = Glib::Variant<T>::create(element);
+    ltw8::Variant<T> variant = ltw8::Variant<T>::create(element);
     g_variant_builder_add_value(builder, variant.gobj());
   }
 
@@ -1597,7 +1597,7 @@ T Variant< std::vector<T> >::get_child(gsize index) const
     throw std::out_of_range(
       "Variant< std::vector<T> >::get_child(): Index out of bounds.");
 
-  Glib::Variant<T> variant;
+  ltw8::Variant<T> variant;
 
   GVariant* gvariant =
     g_variant_get_child_value(const_cast<GVariant*>(gobj()), index);
@@ -1615,7 +1615,7 @@ std::vector<T> Variant< std::vector<T> >::get() const
 
   for(gsize i = 0; i < n_children; i++)
   {
-    Glib::Variant<T> variant;
+    ltw8::Variant<T> variant;
 
     GVariant* gvariant =
       g_variant_get_child_value(const_cast<GVariant*>(gobj()), i);
@@ -1731,35 +1731,35 @@ VariantIter Variant< std::map<K, V> >::get_iter() const
   return VariantContainerBase::get_iter(variant_type());
 }
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
-/** @relates Glib::VariantBase
+/** @relates ltw8::VariantBase
  * @param lhs The left-hand side
  * @param rhs The right-hand side
  */
 inline void swap(VariantBase& lhs, VariantBase& rhs) noexcept
   { lhs.swap(rhs); }
 
-} // namespace Glib
+} // namespace ltw8
 
-namespace Glib
+namespace ltw8
 {
 
-  /** A Glib::wrap() method for this object.
+  /** A ltw8::wrap() method for this object.
    * 
    * @param object The C instance.
    * @param take_copy False if the result should take ownership of the C instance. True if it should take a new copy or ref.
    * @result A C++ instance that wraps this C instance.
    *
-   * @relates Glib::VariantBase
+   * @relates ltw8::VariantBase
    */
-Glib::VariantBase wrap(GVariant* object, bool take_copy = false);
+ltw8::VariantBase wrap(GVariant* object, bool take_copy = false);
 
-} // namespace Glib
+} // namespace ltw8
 
 
 #endif /* _GLIBMM_VARIANT_H */

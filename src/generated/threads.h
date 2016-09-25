@@ -3,7 +3,7 @@
 #ifndef _GLIBMM_THREADS_H
 #define _GLIBMM_THREADS_H
 
-#include <glibmmconfig.h>
+//#include <glibmmconfig.h>
 
 
 /* Copyright (C) 2002 The gtkmm Development Team
@@ -25,12 +25,12 @@
 
 
 #include <glib.h>
-#include <glibmm/error.h>
+#include <error.h>
 #include <sigc++/sigc++.h>
 #include <string>
 #include <cstddef>
 
-namespace Glib
+namespace ltw8
 {
 
 namespace Threads
@@ -53,7 +53,7 @@ class RWLock;
 
 /** %Exception class for thread-related errors.
  */
-class ThreadError : public Glib::Error
+class ThreadError : public ltw8::Error
 {
 public:
   /**  @var Code AGAIN
@@ -69,7 +69,7 @@ public:
     AGAIN
   };
 
-  ThreadError(Code error_code, const Glib::ustring& error_message);
+  ThreadError(Code error_code, const ltw8::ustring& error_message);
   explicit ThreadError(GError* gobject);
   Code code() const;
 
@@ -126,7 +126,7 @@ public:
    *
    * @param slot A slot to execute in the new thread.
    * @return The new Thread* on success.
-   * @throw Glib::Threads::ThreadError
+   * @throw ltw8::Threads::ThreadError
    */
   static Thread* create(const sigc::slot<void>& slot);
 
@@ -152,7 +152,7 @@ public:
    * @param slot A slot to execute in the new thread.
    * @param name A name for the new thread.
    * @return The new Thread* on success.
-   * @throw Glib::Threads::ThreadError
+   * @throw ltw8::Threads::ThreadError
    *
    * @newin{2,36}
    */
@@ -167,7 +167,7 @@ public:
    * Waits until the thread finishes, i.e. the slot, as given to create(),
    * returns or g_thread_exit() is called by the thread.  (Calling
    * g_thread_exit() in a C++ program should be avoided.)  All resources of
-   * the thread including the Glib::Threads::Thread object are released.
+   * the thread including the ltw8::Threads::Thread object are released.
    */
   void join();
 
@@ -182,14 +182,14 @@ public:
   const GThread* gobj() const;
 
 private:
-  // Glib::Thread can neither be constructed nor deleted.
+  // ltw8::Thread can neither be constructed nor deleted.
   Thread();
   void operator delete(void*, std::size_t);
 };
 
 /** %Exception class used to exit from a thread.
  * @code
- * throw Glib::Threads::Thread::Exit();
+ * throw ltw8::Threads::Thread::Exit();
  * @endcode
  * Write this if you want to exit from a thread created by Threads::Thread::create().
  * Of course you must make sure not to catch Threads::Thread::Exit by accident, i.e.
@@ -203,7 +203,7 @@ class Thread::Exit
  * @param gobject The C instance.
  * @return The C++ wrapper.
  *
- * @relates Glib::Threads::Thread
+ * @relates ltw8::Threads::Thread
  */
 Thread* wrap(GThread* gobject);
 
@@ -212,8 +212,8 @@ Thread* wrap(GThread* gobject);
  * Mutex::Lock instead of calling lock() and unlock() directly&nbsp;--
  * it will make your life much easier.
  *
- * @note Glib::Threads::Mutex is not recursive, i.e. a thread will deadlock, if it
- * already has locked the mutex while calling lock().  Use Glib::Threads::RecMutex
+ * @note ltw8::Threads::Mutex is not recursive, i.e. a thread will deadlock, if it
+ * already has locked the mutex while calling lock().  Use ltw8::Threads::RecMutex
  * instead, if you need recursive mutexes.
  */
 class Mutex
@@ -260,7 +260,7 @@ private:
  * @par Usage example:
  * @code
  * {
- *   Glib::Threads::Mutex::Lock lock(mutex); // calls mutex.lock()
+ *   ltw8::Threads::Mutex::Lock lock(mutex); // calls mutex.lock()
  *   do_something();
  * } // the destructor calls mutex.unlock()
  * @endcode
@@ -297,9 +297,9 @@ private:
  * had not been called.
  *
  * @param gobject The C instance.
- * @result The GMutex* cast to a Glib::Threads::Mutex*.
+ * @result The GMutex* cast to a ltw8::Threads::Mutex*.
  *
- * @relates Glib::Threads::Mutex
+ * @relates ltw8::Threads::Mutex
  */
 Mutex* wrap(GMutex* gobject);
 
@@ -361,9 +361,9 @@ private:
  * had not been called.
  *
  * @param gobject The C instance.
- * @result The GRecMutex* cast to a Glib::Threads::RecMutex*.
+ * @result The GRecMutex* cast to a ltw8::Threads::RecMutex*.
  *
- * @relates Glib::Threads::RecMutex
+ * @relates ltw8::Threads::RecMutex
  */
 RecMutex* wrap(GRecMutex* gobject);
 
@@ -459,13 +459,13 @@ private:
  * they can signal the @a Cond, such that the waiting thread is woken up.
  * @par Usage example:
  * @code
- * Glib::Threads::Cond  data_cond;
- * Glib::Threads::Mutex data_mutex;
+ * ltw8::Threads::Cond  data_cond;
+ * ltw8::Threads::Mutex data_mutex;
  * void* current_data = nullptr;
  *
  * void push_data(void* data)
  * {
- *   Glib::Threads::Mutex::Lock lock(data_mutex);
+ *   ltw8::Threads::Mutex::Lock lock(data_mutex);
  *
  *   current_data = data;
  *   data_cond.signal();
@@ -473,7 +473,7 @@ private:
  *
  * void* pop_data()
  * {
- *   Glib::Threads::Mutex::Lock lock(data_mutex);
+ *   ltw8::Threads::Mutex::Lock lock(data_mutex);
  *
  *   while (!current_data)
  *     data_cond.wait(data_mutex);
@@ -530,7 +530,7 @@ public:
    * @code
    * void* pop_data_timed()
    * {
-   *   Glib::Threads::Mutex::Lock lock(data_mutex);
+   *   ltw8::Threads::Mutex::Lock lock(data_mutex);
    *
    *   // Wait at most 5 seconds.
    *   const gint64 end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
@@ -636,7 +636,7 @@ private:
 /*  inline implementation                                                  */
 /***************************************************************************/
 
-/**** Glib::Threads::Mutex::Lock *******************************************/
+/**** ltw8::Threads::Mutex::Lock *******************************************/
 
 inline
 Mutex::Lock::Lock(Mutex& mutex)
@@ -696,7 +696,7 @@ bool Mutex::Lock::locked() const
 }
 
 
-/**** Glib::Threads::RecMutex::Lock ****************************************/
+/**** ltw8::Threads::RecMutex::Lock ****************************************/
 
 inline
 RecMutex::Lock::Lock(RecMutex& mutex)
@@ -756,7 +756,7 @@ bool RecMutex::Lock::locked() const
 }
 
 
-/**** Glib::Threads::RWLock::ReaderLock ************************************/
+/**** ltw8::Threads::RWLock::ReaderLock ************************************/
 
 inline
 RWLock::ReaderLock::ReaderLock(RWLock& rwlock)
@@ -816,7 +816,7 @@ bool RWLock::ReaderLock::locked() const
 }
 
 
-/**** Glib::Threads::RWLock::WriterLock ************************************/
+/**** ltw8::Threads::RWLock::WriterLock ************************************/
 
 inline
 RWLock::WriterLock::WriterLock(RWLock& rwlock)
@@ -875,7 +875,7 @@ bool RWLock::WriterLock::locked() const
   return locked_;
 }
 
-/**** Glib::Threads::Private<T> ********************************************/
+/**** ltw8::Threads::Private<T> ********************************************/
 
 // static
 template <class T>
@@ -917,7 +917,7 @@ void Private<T>::replace(T* data)
 
 } //namespace Threads
 
-} // namespace Glib
+} // namespace ltw8
 
 
 #endif /* _GLIBMM_THREADS_H */

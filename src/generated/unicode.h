@@ -46,7 +46,7 @@
 #undef totitle
 
 
-namespace Glib
+namespace ltw8
 {
 
 /** @addtogroup glibmmEnums glibmm Enums and Flags */
@@ -524,11 +524,11 @@ inline int digit_value(gunichar uc)
 inline int xdigit_value(gunichar uc)
   { return g_unichar_xdigit_value(uc); }
 
-inline Glib::UnicodeType type(gunichar uc)
-  { return static_cast<Glib::UnicodeType>(static_cast<int>(g_unichar_type(uc))); }
+inline ltw8::UnicodeType type(gunichar uc)
+  { return static_cast<ltw8::UnicodeType>(static_cast<int>(g_unichar_type(uc))); }
 
-inline Glib::UnicodeBreakType break_type(gunichar uc)
-  { return static_cast<Glib::UnicodeBreakType>(static_cast<int>(g_unichar_break_type(uc))); }
+inline ltw8::UnicodeBreakType break_type(gunichar uc)
+  { return static_cast<ltw8::UnicodeBreakType>(static_cast<int>(g_unichar_break_type(uc))); }
 
 } // namespace Unicode
 
@@ -574,7 +574,7 @@ inline int xdigit_value(char c)
 
 /** @} group Unicode */
 
-} // namespace Glib
+} // namespace ltw8
 
 
 #endif /* _GLIBMM_UNICODE_H */

@@ -2,11 +2,11 @@
 
 #include <glibmm/variant.h>
 
-namespace Glib
+namespace ltw8
 {
 
 
-/**** Glib::Variant<bool> ****************************************************/
+/**** ltw8::Variant<bool> ****************************************************/
 
 // static
 const VariantType& Variant<bool>::variant_type()
@@ -27,7 +27,7 @@ bool Variant<bool>::get() const
 }
 
 
-/**** Glib::Variant<unsigned char> *******************************************/
+/**** ltw8::Variant<unsigned char> *******************************************/
 
 // static
 const VariantType& Variant<unsigned char>::variant_type()
@@ -48,7 +48,7 @@ unsigned char Variant<unsigned char>::get() const
 }
 
 
-/**** Glib::Variant<gint16> **************************************************/
+/**** ltw8::Variant<gint16> **************************************************/
 
 // static
 const VariantType& Variant<gint16>::variant_type()
@@ -69,7 +69,7 @@ gint16 Variant<gint16>::get() const
 }
 
 
-/**** Glib::Variant<guint16> *************************************************/
+/**** ltw8::Variant<guint16> *************************************************/
 
 // static
 const VariantType& Variant<guint16>::variant_type()
@@ -90,7 +90,7 @@ guint16 Variant<guint16>::get() const
 }
 
 
-/**** Glib::Variant<gint32> **************************************************/
+/**** ltw8::Variant<gint32> **************************************************/
 
 // static
 const VariantType& Variant<gint32>::variant_type()
@@ -120,7 +120,7 @@ gint32 Variant<gint32>::get() const
 }
 
 
-/**** Glib::Variant<guint32> *************************************************/
+/**** ltw8::Variant<guint32> *************************************************/
 
 // static
 const VariantType& Variant<guint32>::variant_type()
@@ -141,7 +141,7 @@ guint32 Variant<guint32>::get() const
 }
 
 
-/**** Glib::Variant<gint64> **************************************************/
+/**** ltw8::Variant<gint64> **************************************************/
 
 // static
 const VariantType& Variant<gint64>::variant_type()
@@ -162,7 +162,7 @@ gint64 Variant<gint64>::get() const
 }
 
 
-/**** Glib::Variant<guint64> *************************************************/
+/**** ltw8::Variant<guint64> *************************************************/
 
 // static
 const VariantType& Variant<guint64>::variant_type()
@@ -183,7 +183,7 @@ guint64 Variant<guint64>::get() const
 }
 
 
-/**** Glib::Variant<double> **************************************************/
+/**** ltw8::Variant<double> **************************************************/
 
 // static
 const VariantType& Variant<double>::variant_type()
@@ -204,4 +204,4 @@ double Variant<double>::get() const
 }
 
 
-} // namespace Glib
+} // namespace ltw8

@@ -28,7 +28,7 @@
 #include <glibmm/utility.h>
 #include <glib.h>
 
-namespace Glib
+namespace ltw8
 {
 
 VariantType::VariantType(const GVariantType* castitem)
@@ -70,7 +70,7 @@ VariantType VariantType::create_tuple(const std::vector<VariantType>& items)
     var_array[i] = const_cast<GVariantType*>(items[i].gobj());
   }
 
-  auto result = Glib::wrap(g_variant_type_new_tuple(var_array, items.size()));
+  auto result = ltw8::wrap(g_variant_type_new_tuple(var_array, items.size()));
   delete[] var_array;
   return result;
 }
@@ -137,18 +137,18 @@ namespace
 } // anonymous namespace
 
 
-namespace Glib
+namespace ltw8
 {
 
-Glib::VariantType wrap(GVariantType* object, bool take_copy /* = false */)
+ltw8::VariantType wrap(GVariantType* object, bool take_copy /* = false */)
 {
-  return Glib::VariantType(object, take_copy);
+  return ltw8::VariantType(object, take_copy);
 }
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
 
@@ -228,17 +228,17 @@ GVariantType* VariantType::gobj_copy() const
 
 VariantType VariantType::create_array(const VariantType& element)
 {
-  return Glib::wrap(g_variant_type_new_array((element).gobj()));
+  return ltw8::wrap(g_variant_type_new_array((element).gobj()));
 }
 
 VariantType VariantType::create_maybe(const VariantType& element)
 {
-  return Glib::wrap(g_variant_type_new_maybe((element).gobj()));
+  return ltw8::wrap(g_variant_type_new_maybe((element).gobj()));
 }
 
 VariantType VariantType::create_dict_entry(const VariantType& key, const VariantType& value)
 {
-  return Glib::wrap(g_variant_type_new_dict_entry((key).gobj(), (value).gobj()));
+  return ltw8::wrap(g_variant_type_new_dict_entry((key).gobj(), (value).gobj()));
 }
 
 gsize VariantType::_get_string_length() const
@@ -303,17 +303,17 @@ bool VariantType::is_subtype_of(const VariantType& supertype) const
 
 VariantType VariantType::element() const
 {
-  return Glib::wrap(const_cast<GVariantType*>(g_variant_type_element(const_cast<GVariantType*>(gobj()))), true);
+  return ltw8::wrap(const_cast<GVariantType*>(g_variant_type_element(const_cast<GVariantType*>(gobj()))), true);
 }
 
 VariantType VariantType::first() const
 {
-  return Glib::wrap(const_cast<GVariantType*>(g_variant_type_first(const_cast<GVariantType*>(gobj()))), true);
+  return ltw8::wrap(const_cast<GVariantType*>(g_variant_type_first(const_cast<GVariantType*>(gobj()))), true);
 }
 
 VariantType VariantType::next() const
 {
-  return Glib::wrap(const_cast<GVariantType*>(g_variant_type_next(const_cast<GVariantType*>(gobj()))), true);
+  return ltw8::wrap(const_cast<GVariantType*>(g_variant_type_next(const_cast<GVariantType*>(gobj()))), true);
 }
 
 gsize VariantType::n_items() const
@@ -323,15 +323,15 @@ gsize VariantType::n_items() const
 
 VariantType VariantType::key() const
 {
-  return Glib::wrap(const_cast<GVariantType*>(g_variant_type_key(const_cast<GVariantType*>(gobj()))), true);
+  return ltw8::wrap(const_cast<GVariantType*>(g_variant_type_key(const_cast<GVariantType*>(gobj()))), true);
 }
 
 VariantType VariantType::value() const
 {
-  return Glib::wrap(const_cast<GVariantType*>(g_variant_type_value(const_cast<GVariantType*>(gobj()))), true);
+  return ltw8::wrap(const_cast<GVariantType*>(g_variant_type_value(const_cast<GVariantType*>(gobj()))), true);
 }
 
 
-} // namespace Glib
+} // namespace ltw8
 
 

@@ -22,10 +22,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <glibmm/variant.h>
+#include <variant.h>
 
 
-namespace Glib
+namespace ltw8
 {
 
 /** VariantDict is a mutable interface to Variant dictionaries.
@@ -75,7 +75,7 @@ class VariantDict final
   VariantDict& operator=(const VariantDict&) = delete;
 
 protected:
-  // Do not derive this.  Glib::VariantDict can neither be constructed nor deleted.
+  // Do not derive this.  ltw8::VariantDict can neither be constructed nor deleted.
 
   void operator delete(void*, std::size_t);
 
@@ -101,10 +101,10 @@ public:
    * dictionary.
    * @return A VariantDict.
    */
-  static Glib::RefPtr<VariantDict> create(const VariantBase& from_asv);
+  static ltw8::RefPtr<VariantDict> create(const VariantBase& from_asv);
 
   /// A create() convenience overload.
-  static Glib::RefPtr<VariantDict> create();
+  static ltw8::RefPtr<VariantDict> create();
 
 
 //TODO: Add a method overload that does not take expected_type (which can be null),
@@ -121,7 +121,7 @@ public:
    * If the key is found and the value has the correct type, it is
    * returned in the @a value output variable.
    */
-  bool lookup_value_variant(const Glib::ustring& key, const VariantType& expected_type, VariantBase& value) const;
+  bool lookup_value_variant(const ltw8::ustring& key, const VariantType& expected_type, VariantBase& value) const;
   
 
   /** Looks up a value in the VariantDict.
@@ -135,7 +135,7 @@ public:
    * returned in the @a value output variable.
    */
   template <typename T_Value>
-  bool lookup_value(const Glib::ustring& key, T_Value& value) const;
+  bool lookup_value(const ltw8::ustring& key, T_Value& value) const;
   
 
   /** Checks if @a key exists in @a dict.
@@ -145,7 +145,7 @@ public:
    * @param key The key to lookup in the dictionary.
    * @return <tt>true</tt> if @a key is in @a dict.
    */
-  bool contains(const Glib::ustring& key) const;
+  bool contains(const ltw8::ustring& key) const;
 
   
   /** Inserts (or replaces) a key in a VariantDict.
@@ -157,7 +157,7 @@ public:
    * @param key The key to insert a value for.
    * @param value The value to insert.
    */
-  void insert_value_variant(const Glib::ustring& key, const VariantBase& value);
+  void insert_value_variant(const ltw8::ustring& key, const VariantBase& value);
 
   /** Inserts (or replaces) a key in a VariantDict.
    * 
@@ -165,7 +165,7 @@ public:
    * @param value The value to insert.
    */
   template <typename T_Value>
-  void insert_value(const Glib::ustring& key, const T_Value& value);
+  void insert_value(const ltw8::ustring& key, const T_Value& value);
 
 
   /** Removes a key and its associated value from a VariantDict.
@@ -175,7 +175,7 @@ public:
    * @param key The key to remove.
    * @return <tt>true</tt> if the key was found and removed.
    */
-  bool remove(const Glib::ustring& key);
+  bool remove(const ltw8::ustring& key);
 
   
   /** Releases all memory associated with a VariantDict without freeing
@@ -201,28 +201,28 @@ public:
 };
 
 template <typename T_Value>
-void VariantDict::insert_value(const Glib::ustring& key, const T_Value& value)
+void VariantDict::insert_value(const ltw8::ustring& key, const T_Value& value)
 {
-  typedef Glib::Variant<T_Value> type_glib_variant;
+  typedef ltw8::Variant<T_Value> type_glib_variant;
 
   //TODO: Can we do any check like this here, before glib does?
   //g_return_val_if_fail(
   //  g_variant_type_equal(g_action_get_parameter_type(const_cast<GAction*>(gobj())), type_glib_variant::variant_type().gobj()),
-  //  Glib::ustring());
+  //  ltw8::ustring());
   return insert_value_variant(key, type_glib_variant::create(value));
 }
 
 template <typename T_Value>
-bool VariantDict::lookup_value(const Glib::ustring& key, T_Value& value) const
+bool VariantDict::lookup_value(const ltw8::ustring& key, T_Value& value) const
 {
   value = T_Value(); //Make sure that it is initialized.
 
-  typedef Glib::Variant<T_Value> type_glib_variant;
+  typedef ltw8::Variant<T_Value> type_glib_variant;
 
   //TODO: Can we do any check like this here, before glib does?
   //g_variant_type_equal(g_action_group_get_action_state_type(const_cast<GActionGroup*>(gobj()), action_name.c_str()), type_glib_variant::variant_type().gobj()));
 
-  Glib::VariantBase variantBase;
+  ltw8::VariantBase variantBase;
   const bool result = lookup_value_variant(key, type_glib_variant::variant_type(), variantBase);
   if(!result)
     return result;
@@ -240,23 +240,23 @@ bool VariantDict::lookup_value(const Glib::ustring& key, T_Value& value) const
   return result;
 }
 
-} //namespace Glib
+} //namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
-  /** A Glib::wrap() method for this object.
+  /** A ltw8::wrap() method for this object.
    * 
    * @param object The C instance.
    * @param take_copy False if the result should take ownership of the C instance. True if it should take a new copy or ref.
    * @result A C++ instance that wraps this C instance.
    *
-   * @relates Glib::VariantDict
+   * @relates ltw8::VariantDict
    */
-  Glib::RefPtr<Glib::VariantDict> wrap(GVariantDict* object, bool take_copy = false);
+  ltw8::RefPtr<ltw8::VariantDict> wrap(GVariantDict* object, bool take_copy = false);
 
-} // namespace Glib
+} // namespace ltw8
 
 
 #endif /* _GLIBMM_VARIANTDICT_H */

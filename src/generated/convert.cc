@@ -33,10 +33,10 @@
 #include <glibmm/utility.h>
 
 
-namespace Glib
+namespace ltw8
 {
 
-/**** Glib::IConv **********************************************************/
+/**** ltw8::IConv **********************************************************/
 
 IConv::IConv(const std::string& to_codeset, const std::string& from_codeset)
 :
@@ -54,7 +54,7 @@ IConv::IConv(const std::string& to_codeset, const std::string& from_codeset)
     // If this should ever fail we're fucked.
     g_assert(gerror != nullptr);
 
-    if(gerror) ::Glib::Error::throw_exception(gerror);
+    if(gerror) ::ltw8::Error::throw_exception(gerror);
   }
 }
 
@@ -94,7 +94,7 @@ std::string IConv::convert(const std::string& str)
   char *const buf = g_convert_with_iconv(
       str.data(), str.size(), gobject_, 0, &bytes_written, &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
   return std::string(ScopedPtr<char>(buf).get(), bytes_written);
 }
@@ -128,7 +128,7 @@ std::string convert(const std::string& str,
       str.data(), str.size(), to_codeset.c_str(), from_codeset.c_str(),
       0, &bytes_written, &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
   return std::string(ScopedPtr<char>(buf).get(), bytes_written);
 }
@@ -145,7 +145,7 @@ std::string convert_with_fallback(const std::string& str,
       str.data(), str.size(), to_codeset.c_str(), from_codeset.c_str(), 0,
       0, &bytes_written, &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
   return std::string(ScopedPtr<char>(buf).get(), bytes_written);
 }
@@ -154,7 +154,7 @@ std::string convert_with_fallback(const std::string& str,
 std::string convert_with_fallback(const std::string& str,
                                   const std::string& to_codeset,
                                   const std::string& from_codeset,
-                                  const Glib::ustring& fallback)
+                                  const ltw8::ustring& fallback)
 {
   gsize bytes_written = 0;
   GError* gerror = 0;
@@ -163,13 +163,13 @@ std::string convert_with_fallback(const std::string& str,
       str.data(), str.size(), to_codeset.c_str(), from_codeset.c_str(),
       const_cast<char*>(fallback.c_str()), 0, &bytes_written, &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
   return std::string(ScopedPtr<char>(buf).get(), bytes_written);
 }
 
 
-Glib::ustring locale_to_utf8(const std::string& opsys_string)
+ltw8::ustring locale_to_utf8(const std::string& opsys_string)
 {
   gsize bytes_written = 0;
   GError* gerror = nullptr;
@@ -177,14 +177,14 @@ Glib::ustring locale_to_utf8(const std::string& opsys_string)
   char *const buf = g_locale_to_utf8(
       opsys_string.data(), opsys_string.size(), 0, &bytes_written, &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
   const ScopedPtr<char> scoped_buf (buf);
-  return Glib::ustring(scoped_buf.get(), scoped_buf.get() + bytes_written);
+  return ltw8::ustring(scoped_buf.get(), scoped_buf.get() + bytes_written);
 }
 
 
-std::string locale_from_utf8(const Glib::ustring& utf8_string)
+std::string locale_from_utf8(const ltw8::ustring& utf8_string)
 {
   gsize bytes_written = 0;
   GError* gerror = nullptr;
@@ -192,13 +192,13 @@ std::string locale_from_utf8(const Glib::ustring& utf8_string)
   char *const buf = g_locale_from_utf8(
       utf8_string.data(), utf8_string.bytes(), 0, &bytes_written, &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
   return std::string(ScopedPtr<char>(buf).get(), bytes_written);
 }
 
 
-Glib::ustring filename_to_utf8(const std::string& opsys_string)
+ltw8::ustring filename_to_utf8(const std::string& opsys_string)
 {
   gsize bytes_written = 0;
   GError* gerror = nullptr;
@@ -206,14 +206,14 @@ Glib::ustring filename_to_utf8(const std::string& opsys_string)
   char *const buf = g_filename_to_utf8(
       opsys_string.data(), opsys_string.size(), 0, &bytes_written, &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
   const ScopedPtr<char> scoped_buf (buf);
-  return Glib::ustring(scoped_buf.get(), scoped_buf.get() + bytes_written);
+  return ltw8::ustring(scoped_buf.get(), scoped_buf.get() + bytes_written);
 }
 
 
-std::string filename_from_utf8(const Glib::ustring& utf8_string)
+std::string filename_from_utf8(const ltw8::ustring& utf8_string)
 {
   gsize bytes_written = 0;
   GError* gerror = nullptr;
@@ -221,20 +221,20 @@ std::string filename_from_utf8(const Glib::ustring& utf8_string)
   char *const buf = g_filename_from_utf8(
       utf8_string.data(), utf8_string.bytes(), 0, &bytes_written, &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
   return std::string(ScopedPtr<char>(buf).get(), bytes_written);
 }
 
 
-std::string filename_from_uri(const Glib::ustring& uri, Glib::ustring& hostname)
+std::string filename_from_uri(const ltw8::ustring& uri, ltw8::ustring& hostname)
 {
   char* hostname_buf = nullptr;
   GError* gerror = nullptr;
 
   char *const buf = g_filename_from_uri(uri.c_str(), &hostname_buf, &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
   // Let's take ownership at this point.
   const ScopedPtr<char> scoped_buf (buf);
@@ -248,78 +248,78 @@ std::string filename_from_uri(const Glib::ustring& uri, Glib::ustring& hostname)
 }
 
 
-std::string filename_from_uri(const Glib::ustring& uri)
+std::string filename_from_uri(const ltw8::ustring& uri)
 {
   GError* gerror = nullptr;
   char *const buf = g_filename_from_uri(uri.c_str(), 0, &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
   return std::string(ScopedPtr<char>(buf).get());
 }
 
 
-Glib::ustring filename_to_uri(const std::string& filename, const Glib::ustring& hostname)
+ltw8::ustring filename_to_uri(const std::string& filename, const ltw8::ustring& hostname)
 {
   GError* gerror = nullptr;
   char *const buf = g_filename_to_uri(filename.c_str(), hostname.c_str(), &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
-  return Glib::ustring(ScopedPtr<char>(buf).get());
+  return ltw8::ustring(ScopedPtr<char>(buf).get());
 }
 
 
-Glib::ustring filename_to_uri(const std::string& filename)
+ltw8::ustring filename_to_uri(const std::string& filename)
 {
   GError* gerror = nullptr;
   char *const buf = g_filename_to_uri(filename.c_str(), 0, &gerror);
 
-  if(gerror) ::Glib::Error::throw_exception(gerror);
+  if(gerror) ::ltw8::Error::throw_exception(gerror);
 
-  return Glib::ustring(ScopedPtr<char>(buf).get());
+  return ltw8::ustring(ScopedPtr<char>(buf).get());
 }
 
-Glib::ustring filename_display_basename(const std::string& filename)
+ltw8::ustring filename_display_basename(const std::string& filename)
 {
   char *const buf = g_filename_display_basename(filename.c_str());
 
-  return Glib::ustring(ScopedPtr<char>(buf).get());
+  return ltw8::ustring(ScopedPtr<char>(buf).get());
 }
 
 
-Glib::ustring filename_display_name(const std::string& filename)
+ltw8::ustring filename_display_name(const std::string& filename)
 {
   char *const buf = g_filename_display_name(filename.c_str());
 
-  return Glib::ustring(ScopedPtr<char>(buf).get());
+  return ltw8::ustring(ScopedPtr<char>(buf).get());
 }
 
-} // namespace Glib
+} // namespace ltw8
 
 namespace
 {
 } // anonymous namespace
 
 
-Glib::ConvertError::ConvertError(Glib::ConvertError::Code error_code, const Glib::ustring& error_message)
+ltw8::ConvertError::ConvertError(ltw8::ConvertError::Code error_code, const ltw8::ustring& error_message)
 :
-  Glib::Error (G_CONVERT_ERROR, error_code, error_message)
+  ltw8::Error (G_CONVERT_ERROR, error_code, error_message)
 {}
 
-Glib::ConvertError::ConvertError(GError* gobject)
+ltw8::ConvertError::ConvertError(GError* gobject)
 :
-  Glib::Error (gobject)
+  ltw8::Error (gobject)
 {}
 
-Glib::ConvertError::Code Glib::ConvertError::code() const
+ltw8::ConvertError::Code ltw8::ConvertError::code() const
 {
-  return static_cast<Code>(Glib::Error::code());
+  return static_cast<Code>(ltw8::Error::code());
 }
 
-void Glib::ConvertError::throw_func(GError* gobject)
+void ltw8::ConvertError::throw_func(GError* gobject)
 {
-  throw Glib::ConvertError(gobject);
+  throw ltw8::ConvertError(gobject);
 }
 
 

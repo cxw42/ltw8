@@ -29,7 +29,7 @@
 #include <glib.h>
 #include <iostream>
 
-namespace Glib
+namespace ltw8
 {
 
 VariantBase::VariantBase(GVariant* castitem, bool make_a_copy /* = false */)
@@ -75,7 +75,7 @@ bool VariantBase::is_castable_to(const VariantType& supertype) const
   // - Both types are assumed to be definite types (no indefinite types,
   //   no 'r', '?' or '*').
   // - VARIANT_TYPE_OBJECT_PATH (o) and VARIANT_TYPE_SIGNATURE (g) can be cast to
-  //   VARIANT_TYPE_STRING (s), (Variant<Glib::ustring>::variant_type()).
+  //   VARIANT_TYPE_STRING (s), (Variant<ltw8::ustring>::variant_type()).
   // - VARIANT_TYPE_STRING (s), VARIANT_TYPE_OBJECT_PATH (o) and
   //   VARIANT_TYPE_SIGNATURE (g) can be cast to VARIANT_TYPE_BYTESTRING (ay),
   //   (Variant<std::string>::variant_type()).
@@ -306,46 +306,46 @@ void Variant<VariantBase>::get(VariantBase& variant) const
   variant.init(gvariant);
 }
 
-/*--------------------Variant<Glib::ustring>---------------------*/
+/*--------------------Variant<ltw8::ustring>---------------------*/
 
-Variant<Glib::ustring>::Variant()
+Variant<ltw8::ustring>::Variant()
 : VariantStringBase()
 {
 }
 
-Variant<Glib::ustring>::Variant(GVariant* castitem, bool take_a_reference)
+Variant<ltw8::ustring>::Variant(GVariant* castitem, bool take_a_reference)
 : VariantStringBase(castitem, take_a_reference)
 {
 }
 
 // static
-const VariantType& Variant<Glib::ustring>::variant_type()
+const VariantType& Variant<ltw8::ustring>::variant_type()
 {
   return VARIANT_TYPE_STRING;
 }
 
-Variant<Glib::ustring>
-Variant<Glib::ustring>::create(const Glib::ustring& data)
+Variant<ltw8::ustring>
+Variant<ltw8::ustring>::create(const ltw8::ustring& data)
 {
   auto result =
-    Variant<Glib::ustring>(g_variant_new_string(data.c_str()));
+    Variant<ltw8::ustring>(g_variant_new_string(data.c_str()));
   return result;
 }
 
-Glib::ustring Variant<Glib::ustring>::get() const
+ltw8::ustring Variant<ltw8::ustring>::get() const
 {
   return convert_const_gchar_ptr_to_ustring(g_variant_get_string(gobject_, 0));
 }
 
-// Variant<Glib::ustring> makes sense for multiple types.
+// Variant<ltw8::ustring> makes sense for multiple types.
 // See http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#g-variant-get-string
 template<>
-Variant<Glib::ustring> VariantBase::cast_dynamic< Variant<Glib::ustring> >(const VariantBase& v)
+Variant<ltw8::ustring> VariantBase::cast_dynamic< Variant<ltw8::ustring> >(const VariantBase& v)
 throw(std::bad_cast)
 {
   if(!v.gobj())
   {
-    return Variant<Glib::ustring>();
+    return Variant<ltw8::ustring>();
   }
 
   const VariantType vtype = v.get_type();
@@ -353,7 +353,7 @@ throw(std::bad_cast)
       vtype.equal(VARIANT_TYPE_OBJECT_PATH) ||
       vtype.equal(VARIANT_TYPE_SIGNATURE) )
   {
-    return Variant<Glib::ustring>(const_cast<GVariant*>(v.gobj()), true);
+    return Variant<ltw8::ustring>(const_cast<GVariant*>(v.gobj()), true);
   }
   else
   {
@@ -427,9 +427,9 @@ std::string Variant<std::string>::get() const
   return convert_const_gchar_ptr_to_stdstring(pch);
 }
 
-/*--------------------Variant< std::vector<Glib::ustring> >---------------------*/
+/*--------------------Variant< std::vector<ltw8::ustring> >---------------------*/
 
-typedef std::vector<Glib::ustring> type_vec_ustring;
+typedef std::vector<ltw8::ustring> type_vec_ustring;
 
 Variant<type_vec_ustring>::Variant()
 : VariantContainerBase()
@@ -451,7 +451,7 @@ Variant<type_vec_ustring>
 Variant<type_vec_ustring>::create(const type_vec_ustring& data)
 {
   // Get the variant type of the elements.
-  VariantType element_variant_type = Variant<Glib::ustring>::variant_type();
+  VariantType element_variant_type = Variant<ltw8::ustring>::variant_type();
 
   // Get the variant type of the array.
   VariantType array_variant_type = Variant<type_vec_ustring>::variant_type();
@@ -476,16 +476,16 @@ Variant<type_vec_ustring>::create(const type_vec_ustring& data)
   return result;
 }
 
-Glib::ustring Variant<type_vec_ustring>::get_child(gsize index) const
+ltw8::ustring Variant<type_vec_ustring>::get_child(gsize index) const
 {
   if (index >= g_variant_n_children(const_cast<GVariant*>(gobj())))
     throw std::out_of_range(
-      "Variant< std::vector<Glib::ustring> >::get_child(): Index out of bounds.");
+      "Variant< std::vector<ltw8::ustring> >::get_child(): Index out of bounds.");
 
   GVariant* gvariant =
     g_variant_get_child_value(const_cast<GVariant*>(gobj()), index);
 
-  return Glib::Variant<Glib::ustring>(gvariant).get();
+  return ltw8::Variant<ltw8::ustring>(gvariant).get();
 }
 
 type_vec_ustring Variant<type_vec_ustring>::get() const
@@ -501,7 +501,7 @@ type_vec_ustring Variant<type_vec_ustring>::get() const
     GVariant* gvariant =
       g_variant_get_child_value(const_cast<GVariant*>(gobj()), i);
 
-    result.push_back(Glib::Variant<Glib::ustring>(gvariant).get());
+    result.push_back(ltw8::Variant<ltw8::ustring>(gvariant).get());
   }
 
   return result;
@@ -590,7 +590,7 @@ std::string Variant<type_vec_string>::get_child(gsize index) const
   GVariant* gvariant =
     g_variant_get_child_value(const_cast<GVariant*>(gobj()), index);
 
-  return Glib::Variant<std::string>(gvariant).get();
+  return ltw8::Variant<std::string>(gvariant).get();
 }
 
 type_vec_string Variant<type_vec_string>::get() const
@@ -606,7 +606,7 @@ type_vec_string Variant<type_vec_string>::get() const
     GVariant* gvariant =
       g_variant_get_child_value(const_cast<GVariant*>(gobj()), i);
 
-    result.push_back(Glib::Variant<std::string>(gvariant).get());
+    result.push_back(ltw8::Variant<std::string>(gvariant).get());
   }
 
   return result;
@@ -617,46 +617,46 @@ VariantIter Variant<type_vec_string>::get_iter() const
   return VariantContainerBase::get_iter(variant_type());
 }
 
-} // namespace Glib
+} // namespace ltw8
 
 namespace
 {
 } // anonymous namespace
 
 
-Glib::VariantParseError::VariantParseError(Glib::VariantParseError::Code error_code, const Glib::ustring& error_message)
+ltw8::VariantParseError::VariantParseError(ltw8::VariantParseError::Code error_code, const ltw8::ustring& error_message)
 :
-  Glib::Error (G_VARIANT_PARSE_ERROR, error_code, error_message)
+  ltw8::Error (G_VARIANT_PARSE_ERROR, error_code, error_message)
 {}
 
-Glib::VariantParseError::VariantParseError(GError* gobject)
+ltw8::VariantParseError::VariantParseError(GError* gobject)
 :
-  Glib::Error (gobject)
+  ltw8::Error (gobject)
 {}
 
-Glib::VariantParseError::Code Glib::VariantParseError::code() const
+ltw8::VariantParseError::Code ltw8::VariantParseError::code() const
 {
-  return static_cast<Code>(Glib::Error::code());
+  return static_cast<Code>(ltw8::Error::code());
 }
 
-void Glib::VariantParseError::throw_func(GError* gobject)
+void ltw8::VariantParseError::throw_func(GError* gobject)
 {
-  throw Glib::VariantParseError(gobject);
+  throw ltw8::VariantParseError(gobject);
 }
 
 
-namespace Glib
+namespace ltw8
 {
 
-Glib::VariantBase wrap(GVariant* object, bool take_copy /* = false */)
+ltw8::VariantBase wrap(GVariant* object, bool take_copy /* = false */)
 {
-  return Glib::VariantBase(object, take_copy);
+  return ltw8::VariantBase(object, take_copy);
 }
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
 
@@ -718,12 +718,12 @@ GVariant* VariantBase::gobj_copy() const
 
 VariantType VariantBase::get_type() const
 {
-  return Glib::wrap(const_cast<GVariantType*>(g_variant_get_type(const_cast<GVariant*>(gobj()))), true);
+  return ltw8::wrap(const_cast<GVariantType*>(g_variant_get_type(const_cast<GVariant*>(gobj()))), true);
 }
 
 std::string VariantBase::get_type_string() const
 {
-  return Glib::convert_const_gchar_ptr_to_stdstring(g_variant_get_type_string(const_cast<GVariant*>(gobj())));
+  return ltw8::convert_const_gchar_ptr_to_stdstring(g_variant_get_type_string(const_cast<GVariant*>(gobj())));
 }
 
 bool VariantBase::is_floating() const
@@ -765,9 +765,9 @@ gconstpointer VariantBase::get_data() const
   return g_variant_get_data(const_cast<GVariant*>(gobj()));
 }
 
-Glib::RefPtr<const Glib::Bytes> VariantBase::get_data_as_bytes() const
+ltw8::RefPtr<const ltw8::Bytes> VariantBase::get_data_as_bytes() const
 {
-  return Glib::wrap(g_variant_get_data_as_bytes(const_cast<GVariant*>(gobj())));
+  return ltw8::wrap(g_variant_get_data_as_bytes(const_cast<GVariant*>(gobj())));
 }
 
 void VariantBase::store(gpointer data) const
@@ -775,9 +775,9 @@ void VariantBase::store(gpointer data) const
   g_variant_store(const_cast<GVariant*>(gobj()), data);
 }
 
-Glib::ustring VariantBase::print(bool type_annotate) const
+ltw8::ustring VariantBase::print(bool type_annotate) const
 {
-  return Glib::convert_return_gchar_ptr_to_ustring(g_variant_print(const_cast<GVariant*>(gobj()), static_cast<int>(type_annotate)));
+  return ltw8::convert_return_gchar_ptr_to_ustring(g_variant_print(const_cast<GVariant*>(gobj()), static_cast<int>(type_annotate)));
 }
 
 guint VariantBase::hash() const
@@ -801,10 +801,10 @@ bool VariantBase::check_format_string(const std::string& format_string, bool cop
 }
 
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
 
@@ -819,10 +819,10 @@ bool VariantStringBase::is_signature(const std::string& string)
 }
 
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
 
@@ -833,37 +833,37 @@ gsize VariantContainerBase::get_n_children() const
 
 VariantBase VariantContainerBase::get_child(gsize index)
 {
-  return Glib::wrap(g_variant_get_child_value(gobj(), index));
+  return ltw8::wrap(g_variant_get_child_value(gobj(), index));
 }
 
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
 
 VariantBase Variant<VariantBase>::get() const
 {
-  return Glib::wrap(g_variant_get_variant(const_cast<GVariant*>(gobj())));
+  return ltw8::wrap(g_variant_get_variant(const_cast<GVariant*>(gobj())));
 }
 
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
 
-} // namespace Glib
+} // namespace ltw8
 
 

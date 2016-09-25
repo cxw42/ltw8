@@ -61,14 +61,14 @@ static void* call_thread_entry_slot(void* data)
     // Recreate the specific slot.
     (*static_cast<sigc::slot<void>*>(slot))();
   }
-  catch (Glib::Threads::Thread::Exit&)
+  catch (ltw8::Threads::Thread::Exit&)
   {
     // Just exit from the thread.  The Threads::Thread::Exit exception
     // is our sane C++ replacement of g_thread_exit().
   }
   catch (...)
   {
-    Glib::exception_handlers_invoke();
+    ltw8::exception_handlers_invoke();
   }
 
   delete slot;
@@ -80,13 +80,13 @@ static void* call_thread_entry_slot(void* data)
 } // anonymous namespace
 
 
-namespace Glib
+namespace ltw8
 {
 
 namespace Threads
 {
 
-/**** Glib::Threads::Thread ************************************************/
+/**** ltw8::Threads::Thread ************************************************/
 
 // static
 Thread* Thread::create(const sigc::slot<void>& slot, const std::string& name)
@@ -101,7 +101,7 @@ Thread* Thread::create(const sigc::slot<void>& slot, const std::string& name)
   if (error)
   {
     delete slot_copy;
-    Glib::Error::throw_exception(error);
+    ltw8::Error::throw_exception(error);
   }
   if (!thread)
   {
@@ -149,7 +149,7 @@ Thread* wrap(GThread* gobject)
 }
 
 
-/**** Glib::Threads::Mutex *************************************************/
+/**** ltw8::Threads::Mutex *************************************************/
 
 Mutex::Mutex()
 {
@@ -181,7 +181,7 @@ Mutex* wrap(GMutex* gobject)
   return reinterpret_cast<Mutex*>(gobject);
 }
 
-/**** Glib::Threads::RecMutex **********************************************/
+/**** ltw8::Threads::RecMutex **********************************************/
 
 RecMutex::RecMutex()
 {
@@ -213,7 +213,7 @@ RecMutex* wrap(GRecMutex* gobject)
   return reinterpret_cast<RecMutex*>(gobject);
 }
 
-/**** Glib::Threads::RWLock ************************************************/
+/**** ltw8::Threads::RWLock ************************************************/
 
 void RWLock::reader_lock()
 {
@@ -256,7 +256,7 @@ RWLock::~RWLock()
 }
 
 
-/**** Glib::Threads::Cond **************************************************/
+/**** ltw8::Threads::Cond **************************************************/
 
 Cond::Cond()
 {
@@ -290,7 +290,7 @@ bool Cond::wait_until(Mutex& mutex, gint64 end_time)
 
 } // namespace Threads
 
-} // namespace Glib
+} // namespace ltw8
 
 
 namespace
@@ -298,24 +298,24 @@ namespace
 } // anonymous namespace
 
 
-Glib::Threads::ThreadError::ThreadError(Glib::Threads::ThreadError::Code error_code, const Glib::ustring& error_message)
+ltw8::Threads::ThreadError::ThreadError(ltw8::Threads::ThreadError::Code error_code, const ltw8::ustring& error_message)
 :
-  Glib::Error (G_THREAD_ERROR, error_code, error_message)
+  ltw8::Error (G_THREAD_ERROR, error_code, error_message)
 {}
 
-Glib::Threads::ThreadError::ThreadError(GError* gobject)
+ltw8::Threads::ThreadError::ThreadError(GError* gobject)
 :
-  Glib::Error (gobject)
+  ltw8::Error (gobject)
 {}
 
-Glib::Threads::ThreadError::Code Glib::Threads::ThreadError::code() const
+ltw8::Threads::ThreadError::Code ltw8::Threads::ThreadError::code() const
 {
-  return static_cast<Code>(Glib::Error::code());
+  return static_cast<Code>(ltw8::Error::code());
 }
 
-void Glib::Threads::ThreadError::throw_func(GError* gobject)
+void ltw8::Threads::ThreadError::throw_func(GError* gobject)
 {
-  throw Glib::Threads::ThreadError(gobject);
+  throw ltw8::Threads::ThreadError(gobject);
 }
 
 

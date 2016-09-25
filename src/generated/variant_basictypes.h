@@ -6,10 +6,10 @@
 #endif
 #endif
 
-namespace Glib
+namespace ltw8
 {
 
-/** Specialization of Glib::Variant containing a bool type.
+/** Specialization of ltw8::Variant containing a bool type.
  * @newin{2,26}
  * @ingroup Variant
  */
@@ -34,25 +34,25 @@ public:
   : VariantBase(castitem, take_a_reference)
   {}
 
-  /** Gets the Glib::VariantType.
-   * @return The Glib::VariantType.
+  /** Gets the ltw8::VariantType.
+   * @return The ltw8::VariantType.
    */
   static const VariantType& variant_type() G_GNUC_CONST;
 
-  /** Creates a new Glib::Variant<bool>.
-   * @param data The value of the new Glib::Variant<bool>.
-   * @return The new Glib::Variant<bool>.
+  /** Creates a new ltw8::Variant<bool>.
+   * @param data The value of the new ltw8::Variant<bool>.
+   * @return The new ltw8::Variant<bool>.
    */
   static Variant<bool> create(bool data);
 
-  /** Gets the value of the Glib::Variant<bool>.
-   * @return The bool value of the Glib::Variant<bool>.
+  /** Gets the value of the ltw8::Variant<bool>.
+   * @return The bool value of the ltw8::Variant<bool>.
    */
   bool get() const;
 };
 
 
-/** Specialization of Glib::Variant containing a unsigned char type.
+/** Specialization of ltw8::Variant containing a unsigned char type.
  * @newin{2,26}
  * @ingroup Variant
  */
@@ -77,25 +77,25 @@ public:
   : VariantBase(castitem, take_a_reference)
   {}
 
-  /** Gets the Glib::VariantType.
-   * @return The Glib::VariantType.
+  /** Gets the ltw8::VariantType.
+   * @return The ltw8::VariantType.
    */
   static const VariantType& variant_type() G_GNUC_CONST;
 
-  /** Creates a new Glib::Variant<unsigned char>.
-   * @param data The value of the new Glib::Variant<unsigned char>.
-   * @return The new Glib::Variant<unsigned char>.
+  /** Creates a new ltw8::Variant<unsigned char>.
+   * @param data The value of the new ltw8::Variant<unsigned char>.
+   * @return The new ltw8::Variant<unsigned char>.
    */
   static Variant<unsigned char> create(unsigned char data);
 
-  /** Gets the value of the Glib::Variant<unsigned char>.
-   * @return The unsigned char value of the Glib::Variant<unsigned char>.
+  /** Gets the value of the ltw8::Variant<unsigned char>.
+   * @return The unsigned char value of the ltw8::Variant<unsigned char>.
    */
   unsigned char get() const;
 };
 
 
-/** Specialization of Glib::Variant containing a gint16 type.
+/** Specialization of ltw8::Variant containing a gint16 type.
  * @newin{2,26}
  * @ingroup Variant
  */
@@ -120,25 +120,25 @@ public:
   : VariantBase(castitem, take_a_reference)
   {}
 
-  /** Gets the Glib::VariantType.
-   * @return The Glib::VariantType.
+  /** Gets the ltw8::VariantType.
+   * @return The ltw8::VariantType.
    */
   static const VariantType& variant_type() G_GNUC_CONST;
 
-  /** Creates a new Glib::Variant<gint16>.
-   * @param data The value of the new Glib::Variant<gint16>.
-   * @return The new Glib::Variant<gint16>.
+  /** Creates a new ltw8::Variant<gint16>.
+   * @param data The value of the new ltw8::Variant<gint16>.
+   * @return The new ltw8::Variant<gint16>.
    */
   static Variant<gint16> create(gint16 data);
 
-  /** Gets the value of the Glib::Variant<gint16>.
-   * @return The gint16 value of the Glib::Variant<gint16>.
+  /** Gets the value of the ltw8::Variant<gint16>.
+   * @return The gint16 value of the ltw8::Variant<gint16>.
    */
   gint16 get() const;
 };
 
 
-/** Specialization of Glib::Variant containing a guint16 type.
+/** Specialization of ltw8::Variant containing a guint16 type.
  * @newin{2,26}
  * @ingroup Variant
  */
@@ -163,25 +163,25 @@ public:
   : VariantBase(castitem, take_a_reference)
   {}
 
-  /** Gets the Glib::VariantType.
-   * @return The Glib::VariantType.
+  /** Gets the ltw8::VariantType.
+   * @return The ltw8::VariantType.
    */
   static const VariantType& variant_type() G_GNUC_CONST;
 
-  /** Creates a new Glib::Variant<guint16>.
-   * @param data The value of the new Glib::Variant<guint16>.
-   * @return The new Glib::Variant<guint16>.
+  /** Creates a new ltw8::Variant<guint16>.
+   * @param data The value of the new ltw8::Variant<guint16>.
+   * @return The new ltw8::Variant<guint16>.
    */
   static Variant<guint16> create(guint16 data);
 
-  /** Gets the value of the Glib::Variant<guint16>.
-   * @return The guint16 value of the Glib::Variant<guint16>.
+  /** Gets the value of the ltw8::Variant<guint16>.
+   * @return The guint16 value of the ltw8::Variant<guint16>.
    */
   guint16 get() const;
 };
 
 
-/** Specialization of Glib::Variant containing a gint32 type.
+/** Specialization of ltw8::Variant containing a gint32 type.
  * @newin{2,26}
  * @ingroup Variant
  */
@@ -206,31 +206,31 @@ public:
   : VariantBase(castitem, take_a_reference)
   {}
 
-  /** Gets the Glib::VariantType.
-   * @return The Glib::VariantType.
+  /** Gets the ltw8::VariantType.
+   * @return The ltw8::VariantType.
    */
   static const VariantType& variant_type() G_GNUC_CONST;
 
-  /** Creates a new Glib::Variant<gint32>.
-   * @param data The value of the new Glib::Variant<gint32>.
-   * @return The new Glib::Variant<gint32>.
+  /** Creates a new ltw8::Variant<gint32>.
+   * @param data The value of the new ltw8::Variant<gint32>.
+   * @return The new ltw8::Variant<gint32>.
    */
   static Variant<gint32> create(gint32 data);
 
-  /** Creates a new Glib::Variant<gint32> of type VARIANT_TYPE_HANDLE.
-   * @param data The value of the new Glib::Variant<gint32>.
-   * @return The new Glib::Variant<gint32>.
+  /** Creates a new ltw8::Variant<gint32> of type VARIANT_TYPE_HANDLE.
+   * @param data The value of the new ltw8::Variant<gint32>.
+   * @return The new ltw8::Variant<gint32>.
    */
   static Variant<gint32> create_handle(gint32 data);
 
-  /** Gets the value of the Glib::Variant<gint32>.
-   * @return The gint32 value of the Glib::Variant<gint32>.
+  /** Gets the value of the ltw8::Variant<gint32>.
+   * @return The gint32 value of the ltw8::Variant<gint32>.
    */
   gint32 get() const;
 };
 
 
-/** Specialization of Glib::Variant containing a guint32 type.
+/** Specialization of ltw8::Variant containing a guint32 type.
  * @newin{2,26}
  * @ingroup Variant
  */
@@ -255,25 +255,25 @@ public:
   : VariantBase(castitem, take_a_reference)
   {}
 
-  /** Gets the Glib::VariantType.
-   * @return The Glib::VariantType.
+  /** Gets the ltw8::VariantType.
+   * @return The ltw8::VariantType.
    */
   static const VariantType& variant_type() G_GNUC_CONST;
 
-  /** Creates a new Glib::Variant<guint32>.
-   * @param data The value of the new Glib::Variant<guint32>.
-   * @return The new Glib::Variant<guint32>.
+  /** Creates a new ltw8::Variant<guint32>.
+   * @param data The value of the new ltw8::Variant<guint32>.
+   * @return The new ltw8::Variant<guint32>.
    */
   static Variant<guint32> create(guint32 data);
 
-  /** Gets the value of the Glib::Variant<guint32>.
-   * @return The guint32 value of the Glib::Variant<guint32>.
+  /** Gets the value of the ltw8::Variant<guint32>.
+   * @return The guint32 value of the ltw8::Variant<guint32>.
    */
   guint32 get() const;
 };
 
 
-/** Specialization of Glib::Variant containing a gint64 type.
+/** Specialization of ltw8::Variant containing a gint64 type.
  * @newin{2,26}
  * @ingroup Variant
  */
@@ -298,25 +298,25 @@ public:
   : VariantBase(castitem, take_a_reference)
   {}
 
-  /** Gets the Glib::VariantType.
-   * @return The Glib::VariantType.
+  /** Gets the ltw8::VariantType.
+   * @return The ltw8::VariantType.
    */
   static const VariantType& variant_type() G_GNUC_CONST;
 
-  /** Creates a new Glib::Variant<gint64>.
-   * @param data The value of the new Glib::Variant<gint64>.
-   * @return The new Glib::Variant<gint64>.
+  /** Creates a new ltw8::Variant<gint64>.
+   * @param data The value of the new ltw8::Variant<gint64>.
+   * @return The new ltw8::Variant<gint64>.
    */
   static Variant<gint64> create(gint64 data);
 
-  /** Gets the value of the Glib::Variant<gint64>.
-   * @return The gint64 value of the Glib::Variant<gint64>.
+  /** Gets the value of the ltw8::Variant<gint64>.
+   * @return The gint64 value of the ltw8::Variant<gint64>.
    */
   gint64 get() const;
 };
 
 
-/** Specialization of Glib::Variant containing a guint64 type.
+/** Specialization of ltw8::Variant containing a guint64 type.
  * @newin{2,26}
  * @ingroup Variant
  */
@@ -341,25 +341,25 @@ public:
   : VariantBase(castitem, take_a_reference)
   {}
 
-  /** Gets the Glib::VariantType.
-   * @return The Glib::VariantType.
+  /** Gets the ltw8::VariantType.
+   * @return The ltw8::VariantType.
    */
   static const VariantType& variant_type() G_GNUC_CONST;
 
-  /** Creates a new Glib::Variant<guint64>.
-   * @param data The value of the new Glib::Variant<guint64>.
-   * @return The new Glib::Variant<guint64>.
+  /** Creates a new ltw8::Variant<guint64>.
+   * @param data The value of the new ltw8::Variant<guint64>.
+   * @return The new ltw8::Variant<guint64>.
    */
   static Variant<guint64> create(guint64 data);
 
-  /** Gets the value of the Glib::Variant<guint64>.
-   * @return The guint64 value of the Glib::Variant<guint64>.
+  /** Gets the value of the ltw8::Variant<guint64>.
+   * @return The guint64 value of the ltw8::Variant<guint64>.
    */
   guint64 get() const;
 };
 
 
-/** Specialization of Glib::Variant containing a double type.
+/** Specialization of ltw8::Variant containing a double type.
  * @newin{2,26}
  * @ingroup Variant
  */
@@ -384,21 +384,21 @@ public:
   : VariantBase(castitem, take_a_reference)
   {}
 
-  /** Gets the Glib::VariantType.
-   * @return The Glib::VariantType.
+  /** Gets the ltw8::VariantType.
+   * @return The ltw8::VariantType.
    */
   static const VariantType& variant_type() G_GNUC_CONST;
 
-  /** Creates a new Glib::Variant<double>.
-   * @param data The value of the new Glib::Variant<double>.
-   * @return The new Glib::Variant<double>.
+  /** Creates a new ltw8::Variant<double>.
+   * @param data The value of the new ltw8::Variant<double>.
+   * @return The new ltw8::Variant<double>.
    */
   static Variant<double> create(double data);
 
-  /** Gets the value of the Glib::Variant<double>.
-   * @return The double value of the Glib::Variant<double>.
+  /** Gets the value of the ltw8::Variant<double>.
+   * @return The double value of the ltw8::Variant<double>.
    */
   double get() const;
 };
 
-} // namespace Glib
+} // namespace ltw8

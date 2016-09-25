@@ -37,7 +37,7 @@ static void warn_already_registered(const char* location, const std::string& ful
 } // anonymous namespace
 
 
-namespace Glib
+namespace ltw8
 {
 
 GType custom_boxed_type_register(const char*   type_name,
@@ -46,7 +46,7 @@ GType custom_boxed_type_register(const char*   type_name,
                                  ValueCopyFunc copy_func)
 {
   std::string full_name ("glibmm__CustomBoxed_");
-  Glib::append_canonical_typename(full_name, type_name);
+  ltw8::append_canonical_typename(full_name, type_name);
 
   // Templates of the same type _might_ be duplicated when instantiated in
   // multiple translation units -- I'm not sure whether this is true.  If the
@@ -59,7 +59,7 @@ GType custom_boxed_type_register(const char*   type_name,
 
   if(const GType existing_type = g_type_from_name(full_name.c_str()))
   {
-    warn_already_registered("Glib::custom_boxed_type_register", full_name);
+    warn_already_registered("ltw8::custom_boxed_type_register", full_name);
     return existing_type;
   }
 
@@ -102,7 +102,7 @@ GType custom_boxed_type_register(const char*   type_name,
 GType custom_pointer_type_register(const char* type_name)
 {
   std::string full_name ("glibmm__CustomPointer_");
-  Glib::append_canonical_typename(full_name, type_name);
+  ltw8::append_canonical_typename(full_name, type_name);
 
   // Templates of the same type _might_ be duplicated when instantiated in
   // multiple translation units -- I'm not sure whether this is true.  If the
@@ -115,7 +115,7 @@ GType custom_pointer_type_register(const char* type_name)
 
   if(const GType existing_type = g_type_from_name(full_name.c_str()))
   {
-    warn_already_registered("Glib::custom_pointer_type_register", full_name);
+    warn_already_registered("ltw8::custom_pointer_type_register", full_name);
     return existing_type;
   }
 
@@ -141,4 +141,4 @@ GType custom_pointer_type_register(const char* type_name)
 }
 
 
-} // namespace Glib
+} // namespace ltw8

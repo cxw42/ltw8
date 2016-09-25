@@ -22,9 +22,9 @@
  */
 
 
-#include <glibmmconfig.h>
-#include <glibmm/error.h>
-#include <glibmm/ustring.h>
+//#include <glibmmconfig.h>
+#include <error.h>
+#include <ustring.h>
 #include <glib.h> /* for gsize */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -32,7 +32,7 @@ extern "C" { typedef struct _GIConv* GIConv; }
 #endif
 
 
-namespace Glib
+namespace ltw8
 {
 
 /** @defgroup CharsetConv Character Set Conversion
@@ -41,12 +41,12 @@ namespace Glib
  */
 
 /** Exception class for charset conversion errors.
- * Glib::convert() and friends throw a ConvertError exception if the charset
+ * ltw8::convert() and friends throw a ConvertError exception if the charset
  * conversion failed for some reason.  When writing non-trivial applications
  * you should always catch those errors, and then try to recover, or tell the
  * user the input was invalid.
  */
-class ConvertError : public Glib::Error
+class ConvertError : public ltw8::Error
 {
 public:
   /**  @var Code NO_CONVERSION
@@ -86,7 +86,7 @@ public:
     NO_MEMORY
   };
 
-  ConvertError(Code error_code, const Glib::ustring& error_message);
+  ConvertError(Code error_code, const ltw8::ustring& error_message);
   explicit ConvertError(GError* gobject);
   Code code() const;
 
@@ -102,7 +102,7 @@ private:
 
 
 /** Thin %iconv() wrapper.
- * glibmm provides Glib::convert() and Glib::locale_to_utf8() which
+ * glibmm provides ltw8::convert() and ltw8::locale_to_utf8() which
  * are likely more convenient than the raw iconv wrappers.  However,
  * creating an IConv object once and using the convert() method could
  * be useful when converting multiple times between the same charsets.
@@ -113,7 +113,7 @@ public:
   /** Open new conversion descriptor.
    * @param to_codeset Destination codeset.
    * @param from_codeset %Source codeset.
-   * @throw Glib::ConvertError
+   * @throw ltw8::ConvertError
    */
   IConv(const std::string& to_codeset, const std::string& from_codeset);
   
@@ -130,7 +130,7 @@ public:
 
   /** Same as the standard UNIX routine %iconv(), but may be implemented
    * via libiconv on UNIX flavors that lack a native implementation.  glibmm
-   * provides Glib::convert() and Glib::locale_to_utf8() which are likely
+   * provides ltw8::convert() and ltw8::locale_to_utf8() which are likely
    * more convenient than the raw iconv wrappers.
    * @param inbuf Bytes to convert.
    * @param inbytes_left In/out parameter, bytes remaining to convert in @a inbuf.
@@ -151,7 +151,7 @@ public:
   /** Convert from one encoding to another.
    * @param str The string to convert.
    * @return The converted string.
-   * @throw Glib::ConvertError
+   * @throw ltw8::ConvertError
    */
   std::string convert(const std::string& str);
 
@@ -178,7 +178,7 @@ bool get_charset(std::string& charset);
  * @param to_codeset Name of the target charset.
  * @param from_codeset Name of the source charset.
  * @return The converted string.
- * @throw Glib::ConvertError
+ * @throw ltw8::ConvertError
  */
 std::string convert(const std::string& str,
                     const std::string& to_codeset,
@@ -192,7 +192,7 @@ std::string convert(const std::string& str,
  * @param to_codeset Name of the target charset.
  * @param from_codeset Name of the source charset.
  * @return The converted string.
- * @throw Glib::ConvertError
+ * @throw ltw8::ConvertError
  */
 std::string convert_with_fallback(const std::string& str,
                                   const std::string& to_codeset,
@@ -203,7 +203,7 @@ std::string convert_with_fallback(const std::string& str,
  * @note It is not guaranteed that the specification for the fallback sequences
  * in @a fallback will be honored. Some systems may do a approximate conversion
  * from @a from_codeset to @a to_codeset in their iconv() functions, in which
- * case Glib will simply return that approximate conversion.
+ * case ltw8 will simply return that approximate conversion.
  *
  * @param str The string to convert.
  * @param to_codeset Name of the target charset.
@@ -212,45 +212,45 @@ std::string convert_with_fallback(const std::string& str,
  *  available in the target encoding.  All characters in the fallback string
  *  @em must be available in the target encoding.
  * @return The converted string.
- * @throw Glib::ConvertError
+ * @throw ltw8::ConvertError
  */
 std::string convert_with_fallback(const std::string& str,
                                   const std::string& to_codeset,
                                   const std::string& from_codeset,
-                                  const Glib::ustring& fallback);
+                                  const ltw8::ustring& fallback);
 
 /** Convert from the current locale's encoding to UTF-8.
- * Convenience wrapper around Glib::convert().
+ * Convenience wrapper around ltw8::convert().
  * @param opsys_string The string to convert.  Must be encoded in the charset
  *  used by the operating system's current locale.
  * @return The input string converted to UTF-8 encoding.
- * @throw Glib::ConvertError
+ * @throw ltw8::ConvertError
  */
-Glib::ustring locale_to_utf8(const std::string& opsys_string);
+ltw8::ustring locale_to_utf8(const std::string& opsys_string);
 
 /** Convert from UTF-8 to the current locale's encoding.
- * Convenience wrapper around Glib::convert().
+ * Convenience wrapper around ltw8::convert().
  * @param utf8_string The UTF-8 string to convert.
  * @return The input string converted to the charset used by the operating
  *  system's current locale.
- * @throw Glib::ConvertError
+ * @throw ltw8::ConvertError
  */
-std::string locale_from_utf8(const Glib::ustring& utf8_string);
+std::string locale_from_utf8(const ltw8::ustring& utf8_string);
 
 /** Converts a string which is in the encoding used for filenames into
  * a UTF-8 string.
  * @param opsys_string A string in the encoding for filenames.
  * @return The converted string.
- * @throw Glib::ConvertError
+ * @throw ltw8::ConvertError
  */
-Glib::ustring filename_to_utf8(const std::string& opsys_string);
+ltw8::ustring filename_to_utf8(const std::string& opsys_string);
 
 /** Converts a string from UTF-8 to the encoding used for filenames.
  * @param utf8_string A UTF-8 encoded string.
  * @return The converted string.
- * @throw Glib::ConvertError
+ * @throw ltw8::ConvertError
  */
-std::string filename_from_utf8(const Glib::ustring& utf8_string);
+std::string filename_from_utf8(const ltw8::ustring& utf8_string);
 
 /** Converts an escaped UTF-8 encoded URI to a local filename
  * in the encoding used for filenames.
@@ -258,34 +258,34 @@ std::string filename_from_utf8(const Glib::ustring& utf8_string);
  * @param hostname Location to store hostname for the URI. If there is no
  *   hostname in the URI, <tt>""</tt> will be stored in this location.
  * @return The resulting filename.
- * @throw Glib::ConvertError
+ * @throw ltw8::ConvertError
  */
-std::string filename_from_uri(const Glib::ustring& uri, Glib::ustring& hostname);
+std::string filename_from_uri(const ltw8::ustring& uri, ltw8::ustring& hostname);
 
 /** Converts an escaped UTF-8 encoded URI to a local filename in the encoding
  * used for filenames.
  * @param uri A string in the encoding for filenames.
  * @return The resulting filename.
- * @throw Glib::ConvertError
+ * @throw ltw8::ConvertError
  */
-std::string filename_from_uri(const Glib::ustring& uri);
+std::string filename_from_uri(const ltw8::ustring& uri);
 
 /** Converts an absolute filename to an escaped UTF-8 encoded URI.
  * @param filename An absolute filename specified in the encoding used
  *   for filenames by the operating system.
  * @param hostname A UTF-8 encoded hostname.
  * @return The resulting URI.
- * @throw Glib::ConvertError
+ * @throw ltw8::ConvertError
  */
-Glib::ustring filename_to_uri(const std::string& filename, const Glib::ustring& hostname);
+ltw8::ustring filename_to_uri(const std::string& filename, const ltw8::ustring& hostname);
 
 /** Converts an absolute filename to an escaped UTF-8 encoded URI.
  * @param filename An absolute filename specified in the encoding used
  *   for filenames by the operating system.
  * @return The resulting URI.
- * @throw Glib::ConvertError
+ * @throw ltw8::ConvertError
  */
-Glib::ustring filename_to_uri(const std::string& filename);
+ltw8::ustring filename_to_uri(const std::string& filename);
 
 /** Returns the display basename for the particular filename, guaranteed
  * to be valid UTF-8. The display name might not be identical to the filename,
@@ -301,7 +301,7 @@ Glib::ustring filename_to_uri(const std::string& filename);
  * @param filename An absolute pathname in the GLib file name encoding.
  * @result A string containing a rendition of the basename of the filename in valid UTF-8
  */
-Glib::ustring filename_display_basename(const std::string& filename);
+ltw8::ustring filename_display_basename(const std::string& filename);
 
 /** Converts a filename into a valid UTF-8 string. The
  * conversion is not necessarily reversible, so you
@@ -318,11 +318,11 @@ Glib::ustring filename_display_basename(const std::string& filename);
  * @param filename: a pathname hopefully in the GLib file name encoding
  * @result A string containing a rendition of the filename in valid UTF-8.
  */
-Glib::ustring filename_display_name(const std::string& filename);
+ltw8::ustring filename_display_name(const std::string& filename);
 
 /** @} group CharsetConv */
 
-} // namespace Glib
+} // namespace ltw8
 
 
 #endif /* _GLIBMM_CONVERT_H */

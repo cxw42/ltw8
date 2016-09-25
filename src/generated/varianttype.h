@@ -22,7 +22,7 @@
  */
 
 
-#include <glibmmconfig.h>
+//#include <glibmmconfig.h>
 #include <glib-object.h> //For gsize
 #include <string>
 #include <vector>
@@ -31,7 +31,7 @@
 typedef struct _GVariantType GVariantType;
 #endif //DOXYGEN_SHOULD_SKIP_THIS
 
-namespace Glib
+namespace ltw8
 {
 
 /** VariantType - The VariantBase type system.
@@ -524,35 +524,35 @@ extern const VariantType VARIANT_TYPE_BYTESTRING;
 extern const VariantType VARIANT_TYPE_BYTESTRING_ARRAY;
 
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
-/** @relates Glib::VariantType
+/** @relates ltw8::VariantType
  * @param lhs The left-hand side
  * @param rhs The right-hand side
  */
 inline void swap(VariantType& lhs, VariantType& rhs) noexcept
   { lhs.swap(rhs); }
 
-} // namespace Glib
+} // namespace ltw8
 
-namespace Glib
+namespace ltw8
 {
 
-  /** A Glib::wrap() method for this object.
+  /** A ltw8::wrap() method for this object.
    * 
    * @param object The C instance.
    * @param take_copy False if the result should take ownership of the C instance. True if it should take a new copy or ref.
    * @result A C++ instance that wraps this C instance.
    *
-   * @relates Glib::VariantType
+   * @relates ltw8::VariantType
    */
-Glib::VariantType wrap(GVariantType* object, bool take_copy = false);
+ltw8::VariantType wrap(GVariantType* object, bool take_copy = false);
 
-} // namespace Glib
+} // namespace ltw8
 
 
 #endif /* _GLIBMM_VARIANTTYPE_H */

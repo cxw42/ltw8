@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmmconfig.h>
-#include <glibmm/ustring.h>
+//#include <glibmmconfig.h>
+#include <ustring.h>
 #include <glib.h>
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -50,7 +50,7 @@
 #endif
 
 
-namespace Glib
+namespace ltw8
 {
 
 // These are used by gtkmmproc-generated type conversions:
@@ -81,9 +81,9 @@ inline T* unconst(const T* t)
 
 // Convert const gchar* to ustring, while treating NULL as empty string.
 inline
-Glib::ustring convert_const_gchar_ptr_to_ustring(const char* str)
+ltw8::ustring convert_const_gchar_ptr_to_ustring(const char* str)
 {
-  return (str) ? Glib::ustring(str) : Glib::ustring();
+  return (str) ? ltw8::ustring(str) : ltw8::ustring();
 }
 
 // Convert const gchar* to std::string, while treating NULL as empty string.
@@ -95,17 +95,17 @@ std::string convert_const_gchar_ptr_to_stdstring(const char* str)
 
 // Convert a non-const gchar* return value to ustring, freeing it too.
 inline
-Glib::ustring convert_return_gchar_ptr_to_ustring(char* str)
+ltw8::ustring convert_return_gchar_ptr_to_ustring(char* str)
 {
-  return (str) ? Glib::ustring(Glib::ScopedPtr<char>(str).get())
-               : Glib::ustring();
+  return (str) ? ltw8::ustring(ltw8::ScopedPtr<char>(str).get())
+               : ltw8::ustring();
 }
 
 // Convert a non-const gchar* return value to std::string, freeing it too.
 inline
 std::string convert_return_gchar_ptr_to_stdstring(char* str)
 {
-  return (str) ? std::string(Glib::ScopedPtr<char>(str).get())
+  return (str) ? std::string(ltw8::ScopedPtr<char>(str).get())
                : std::string();
 }
 
@@ -122,7 +122,7 @@ void destroy_notify_delete(void* data)
   delete static_cast<T*>(data);
 }
 
-} // namespace Glib
+} // namespace ltw8
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 

@@ -22,7 +22,7 @@
 #include <glibmm/utility.h>
 
 
-void Glib::append_canonical_typename(std::string& dest, const char* type_name)
+void ltw8::append_canonical_typename(std::string& dest, const char* type_name)
 {
   const std::string::size_type offset = dest.size();
   dest += type_name;

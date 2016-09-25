@@ -27,11 +27,11 @@
 #endif
 #endif
 
-#include <glibmmconfig.h>
+//#include <glibmmconfig.h>
 #include <new>
 #include <typeinfo>
 
-namespace Glib
+namespace ltw8
 {
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -43,7 +43,7 @@ extern "C"
   typedef void (* ValueCopyFunc) (const GValue*, GValue*);
 }
 
-/* When using Glib::Value<T> with custom types, each T will be registered
+/* When using ltw8::Value<T> with custom types, each T will be registered
  * as subtype of G_TYPE_BOXED, via this function.  The type_name argument
  * should be the C++ RTTI name.
  */
@@ -52,7 +52,7 @@ GType custom_boxed_type_register(const char*   type_name,
                                  ValueFreeFunc free_func,
                                  ValueCopyFunc copy_func);
 
-/* When using Glib::Value<T*> or Glib::Value<const T*> with custom types,
+/* When using ltw8::Value<T*> or ltw8::Value<const T*> with custom types,
  * each T* or const T* will be registered as a subtype of G_TYPE_POINTER,
  * via this function.  The type_name argument should be the C++ RTTI name.
  */
@@ -78,13 +78,13 @@ public:
 
 private:
   inline
-  static GType value_type_(Glib::Object*);
+  static GType value_type_(ltw8::Object*);
   static GType value_type_(void*);
 
-  inline void set_(CppType data, Glib::Object*);
+  inline void set_(CppType data, ltw8::Object*);
   inline void set_(CppType data, void*);
 
-  inline CppType get_(Glib::Object*) const;
+  inline CppType get_(ltw8::Object*) const;
   inline CppType get_(void*) const;
 };
 
@@ -99,7 +99,7 @@ private:
  *
  * Compiler-generated implementations are OK, provided they do the
  * right thing for the type.  In other words, any type that works with
- * <tt>std::vector</tt> will work with Glib::Value<>.
+ * <tt>std::vector</tt> will work with ltw8::Value<>.
  *
  * @note None of the operations listed above are allowed to throw.  If you
  * cannot ensure that no exceptions will be thrown, consider using either
@@ -147,27 +147,27 @@ class Value<const T*> : public Value_Pointer<T,const T*>
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-/**** Glib::Value_Pointer<T, PtrT> *****************************************/
+/**** ltw8::Value_Pointer<T, PtrT> *****************************************/
 
-/** Implementation for Glib::Object pointers **/
+/** Implementation for ltw8::Object pointers **/
 
 // static
 template <class T, class PtrT> inline
-GType Value_Pointer<T,PtrT>::value_type_(Glib::Object*)
+GType Value_Pointer<T,PtrT>::value_type_(ltw8::Object*)
 {
   return T::get_base_type();
 }
 
 template <class T, class PtrT> inline
-void Value_Pointer<T,PtrT>::set_(PtrT data, Glib::Object*)
+void Value_Pointer<T,PtrT>::set_(PtrT data, ltw8::Object*)
 {
   set_object(const_cast<T*>(data));
 }
 
-//More spec-compliant compilers (such as Tru64) need this to be near Glib::Object instead.
+//More spec-compliant compilers (such as Tru64) need this to be near ltw8::Object instead.
 #ifdef GLIBMM_CAN_USE_DYNAMIC_CAST_IN_UNUSED_TEMPLATE_WITHOUT_DEFINITION
 template <class T, class PtrT> inline
-PtrT Value_Pointer<T,PtrT>::get_(Glib::Object*) const
+PtrT Value_Pointer<T,PtrT>::get_(ltw8::Object*) const
 {
   return dynamic_cast<T*>(get_object());
 }
@@ -182,7 +182,7 @@ GType Value_Pointer<T,PtrT>::value_type_(void*)
   static GType custom_type = 0;
 
   if(!custom_type)
-    custom_type = Glib::custom_pointer_type_register(typeid(PtrT).name());
+    custom_type = ltw8::custom_pointer_type_register(typeid(PtrT).name());
 
   return custom_type;
 }
@@ -224,7 +224,7 @@ PtrT Value_Pointer<T,PtrT>::get() const
 }
 
 
-/**** Glib::Value<T> *******************************************************/
+/**** ltw8::Value<T> *******************************************************/
 
 // Static data, specific to each template instantiation.
 template <class T>
@@ -250,7 +250,7 @@ GType Value<T>::value_type()
 {
   if(!custom_type_)
   {
-    custom_type_ = Glib::custom_boxed_type_register(
+    custom_type_ = ltw8::custom_boxed_type_register(
         typeid(CppType).name(),
         &Value<T>::value_init_func,
         &Value<T>::value_free_func,
@@ -285,6 +285,6 @@ void Value<T>::value_copy_func(const GValue* src_value, GValue* dest_value)
 
 #endif /* DOXYGEN_SHOULD_SKIP_THIS */
 
-} // namespace Glib
+} // namespace ltw8
 
 #endif //_GLIBMM_VALUE_CUSTOM_H

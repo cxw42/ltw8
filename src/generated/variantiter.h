@@ -24,7 +24,7 @@
 #include <glib.h>
 
 
-namespace Glib
+namespace ltw8
 {
 
 class VariantBase;
@@ -116,35 +116,35 @@ public:
 
 };
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
-/** @relates Glib::VariantIter
+/** @relates ltw8::VariantIter
  * @param lhs The left-hand side
  * @param rhs The right-hand side
  */
 inline void swap(VariantIter& lhs, VariantIter& rhs) noexcept
   { lhs.swap(rhs); }
 
-} // namespace Glib
+} // namespace ltw8
 
-namespace Glib
+namespace ltw8
 {
 
-  /** A Glib::wrap() method for this object.
+  /** A ltw8::wrap() method for this object.
    * 
    * @param object The C instance.
    * @param take_copy False if the result should take ownership of the C instance. True if it should take a new copy or ref.
    * @result A C++ instance that wraps this C instance.
    *
-   * @relates Glib::VariantIter
+   * @relates ltw8::VariantIter
    */
-Glib::VariantIter wrap(GVariantIter* object, bool take_copy = false);
+ltw8::VariantIter wrap(GVariantIter* object, bool take_copy = false);
 
-} // namespace Glib
+} // namespace ltw8
 
 
 #endif /* _GLIBMM_VARIANTITER_H */

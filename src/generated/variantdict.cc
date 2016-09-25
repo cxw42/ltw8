@@ -27,10 +27,10 @@
 
 #include <glib.h>
 
-namespace Glib
+namespace ltw8
 {
 
-bool VariantDict::lookup_value_variant(const Glib::ustring& key, const VariantType& expected_type, VariantBase& value) const
+bool VariantDict::lookup_value_variant(const ltw8::ustring& key, const VariantType& expected_type, VariantBase& value) const
 {
   GVariant* const g_value =
     g_variant_dict_lookup_value(const_cast<GVariantDict*>(gobj()),
@@ -43,7 +43,7 @@ bool VariantDict::lookup_value_variant(const Glib::ustring& key, const VariantTy
   return true;
 }
 
-} //namespace Glib
+} //namespace ltw8
 
 
 namespace
@@ -64,22 +64,22 @@ namespace
  * class and by using = delete on the default constructor.
  */
 
-namespace Glib
+namespace ltw8
 {
 
-Glib::RefPtr<Glib::VariantDict> wrap(GVariantDict* object, bool take_copy)
+ltw8::RefPtr<ltw8::VariantDict> wrap(GVariantDict* object, bool take_copy)
 {
   if(take_copy && object)
     g_variant_dict_ref(object);
 
   // See the comment at the top of this file, if you want to know why the cast works.
-  return Glib::RefPtr<Glib::VariantDict>(reinterpret_cast<Glib::VariantDict*>(object));
+  return ltw8::RefPtr<ltw8::VariantDict>(reinterpret_cast<ltw8::VariantDict*>(object));
 }
 
-} // namespace Glib
+} // namespace ltw8
 
 
-namespace Glib
+namespace ltw8
 {
 
 
@@ -116,27 +116,27 @@ GVariantDict* VariantDict::gobj_copy() const
 }
 
 
-Glib::RefPtr<VariantDict> VariantDict::create(const VariantBase& from_asv)
+ltw8::RefPtr<VariantDict> VariantDict::create(const VariantBase& from_asv)
 {
-  return Glib::wrap(g_variant_dict_new(const_cast<GVariant*>((from_asv).gobj())));
+  return ltw8::wrap(g_variant_dict_new(const_cast<GVariant*>((from_asv).gobj())));
 }
 
-Glib::RefPtr<VariantDict> VariantDict::create()
+ltw8::RefPtr<VariantDict> VariantDict::create()
 {
-  return Glib::wrap(g_variant_dict_new(0));
+  return ltw8::wrap(g_variant_dict_new(0));
 }
 
-bool VariantDict::contains(const Glib::ustring& key) const
+bool VariantDict::contains(const ltw8::ustring& key) const
 {
   return g_variant_dict_contains(const_cast<GVariantDict*>(gobj()), key.c_str());
 }
 
-void VariantDict::insert_value_variant(const Glib::ustring& key, const VariantBase& value)
+void VariantDict::insert_value_variant(const ltw8::ustring& key, const VariantBase& value)
 {
   g_variant_dict_insert_value(gobj(), key.c_str(), const_cast<GVariant*>((value).gobj()));
 }
 
-bool VariantDict::remove(const Glib::ustring& key)
+bool VariantDict::remove(const ltw8::ustring& key)
 {
   return g_variant_dict_remove(gobj(), key.c_str());
 }
@@ -147,6 +147,6 @@ void VariantDict::clear()
 }
 
 
-} // namespace Glib
+} // namespace ltw8
 
 
