@@ -14,9 +14,13 @@
   // for _vasprintf_r
 #include <assert.h>
 
-
 // All of these are hacks to make the routines compile.
 // They should be tested or replaced with something better!
+
+#define _IGNORE(x)
+  // from gtkmmproc - per 
+  // https://github.com/GNOME/glibmm/blob/master/docs/internal/using_gmmproc.txt
+  // _IGNORE is an instruction to gmmproc.
 
 #if 0
 // Based on glib/glib/gmessages.h

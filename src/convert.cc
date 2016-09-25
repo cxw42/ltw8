@@ -297,3 +297,25 @@ filename_display_name(const std::string& filename)
 }
 
 } // namespace ltw8
+
+// Added per convert.h _WRAP_GERROR
+ltw8::VariantParseError::VariantParseError(ltw8::VariantParseError::Code error_code, const ltw8::ustring& error_message)
+:
+  ltw8::Error (G_VARIANT_PARSE_ERROR, error_code, error_message)
+{}
+
+ltw8::ConvertError::ConvertError(GError* gobject)
+:
+  ltw8::Error (gobject)
+{}
+
+ltw8::ConvertError::Code ltw8::ConvertError::code() const
+{
+  return static_cast<Code>(ltw8::Error::code());
+}
+
+void ltw8::ConvertError::throw_func(GError* gobject)
+{
+  throw ltw8::ConvertError(gobject);
+}
+

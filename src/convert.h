@@ -15,7 +15,7 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-_DEFS(glibmm,glib)
+//_DEFS(glibmm,glib)
 
 //#include <glibmmconfig.h>
 #include <error.h>
@@ -41,7 +41,35 @@ namespace ltw8
  * you should always catch those errors, and then try to recover, or tell the
  * user the input was invalid.
  */
-_WRAP_GERROR(ConvertError, GConvertError, G_CONVERT_ERROR, NO_GTYPE)
+//_WRAP_GERROR(ConvertError, GConvertError, G_CONVERT_ERROR, NO_GTYPE)
+// Note: Operation of _WRAP_GERROR determined from 
+// http://fossies.org/dox/glibmm-2.50.0/variant_8h_source.html and
+// http://fossies.org/dox/glibmm-2.50.0/variant_8cc_source.html 
+// (class VariantParseError), and from 
+// https://developer.gnome.org/gtkmm-tutorial/stable/
+//                            sec-wrapping-hg-files.html.sl#gmmproc-wrap-gerror
+
+class ConvertError: public ltw8::Error {
+public:
+  enum Code {
+    NO_CONVERSION,
+    ILLEGAL_SEQUENCE,
+    FAILED,
+    PARTIAL_INPUT,
+    BAD_URI,
+    NOT_ABSOLUTE_PATH,
+    NO_MEMORY
+  };
+  ConvertError(Code error_code, const ltw8::ustring& error_message);
+  explicit ConvertError(GError* gobject);
+  Code code() const;
+  
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+private:
+  static void throw_func(GError* gobject);
+  friend void wrap_init(); // uses throw_func()
+#endif //DOXYGEN_SHOULD_SKIP_THIS
+}; //ConvertError
 
 
 /** Thin %iconv() wrapper.
@@ -266,4 +294,6 @@ ltw8::ustring filename_display_name(const std::string& filename);
 /** @} group CharsetConv */
 
 } // namespace ltw8
+
+// vi: set ts=2 sts=2 sw=2 et ai: //
 
