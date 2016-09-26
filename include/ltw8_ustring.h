@@ -1039,6 +1039,31 @@ operator>=(const ltw8::ustring::const_iterator& lhs, const ltw8::ustring::const_
   return (lhs.base() >= rhs.base());
 }
 
+// Patch 38fd0d5
+// This is the one ustring-specific change added between glibmm 2.46 and
+// glibmm 2.49.5 per https://abi-laboratory.pro/tracker/changelog/glibmm/2.49.5/log.html .
+// Patch from https://git.gnome.org/browse/glibmm/commit/?id=38fd0d5f90683075955a36ce7df7a77d689a34e1
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+// Don't allow implicit conversion of integer 0 to nullptr in the relational operators.
+// If the int versions of the relational operators are not deleted, attempts to
+// compare with other integer values than 0 can result in really unexpected behaviour.
+// See https://bugzilla.gnome.org/show_bug.cgi?id=572978#c10
+bool operator==(const ustring& lhs, int rhs) = delete;
+bool operator==(int lhs, const ustring& rhs) = delete;
+bool operator!=(const ustring& lhs, int rhs) = delete;
+bool operator!=(int lhs, const ustring& rhs) = delete;
+bool operator<(const ustring& lhs, int rhs) = delete;
+bool operator<(int lhs, const ustring& rhs) = delete;
+bool operator>(const ustring& lhs, int rhs) = delete;
+bool operator>(int lhs, const ustring& rhs) = delete;
+bool operator<=(const ustring& lhs, int rhs) = delete;
+bool operator<=(int lhs, const ustring& rhs) = delete;
+bool operator>=(const ustring& lhs, int rhs) = delete;
+bool operator>=(int lhs, const ustring& rhs) = delete;
+#endif // DOXYGEN_SHOULD_SKIP_THIS
+// End Patch 38fd0d5
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 /**** ltw8::ustring::SequenceToString **************************************/
