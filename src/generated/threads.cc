@@ -8,8 +8,8 @@
 
 #include <glibmm.h>
 
-#include <glibmm/threads.h>
-#include <glibmm/private/threads_p.h>
+#include <threads.h>
+#include <private/threads_p.h>
 
 
 /* Copyright (C) 2002 The gtkmm Development Team
@@ -29,7 +29,7 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmm/exceptionhandler.h>
+#include <exceptionhandler.h>
 #include <glib.h>
 
 /* Why reinterpret_cast<Thread*>(gobject) is needed:

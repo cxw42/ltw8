@@ -3,8 +3,8 @@
 
 #include <glibmm.h>
 
-#include <glibmm/variantiter.h>
-#include <glibmm/private/variantiter_p.h>
+#include <variantiter.h>
+#include <private/variantiter_p.h>
 
 
 /* Copyright(C) 2010 The glibmm Development Team
@@ -24,7 +24,7 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmm/variant.h>
+#include <variant.h>
 #include <glib.h>
 
 namespace ltw8

@@ -3,7 +3,7 @@
 #ifndef _GLIBMM_THREADS_H
 #define _GLIBMM_THREADS_H
 
-//#include <glibmmconfig.h>
+////////#include <glibmmconfig.h>
 
 
 /* Copyright (C) 2002 The gtkmm Development Team

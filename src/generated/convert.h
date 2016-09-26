@@ -22,9 +22,9 @@
  */
 
 
-//#include <glibmmconfig.h>
+////////#include <glibmmconfig.h>
 #include <error.h>
-#include <ustring.h>
+#include "ltw8_ustring.h"
 #include <glib.h> /* for gsize */
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

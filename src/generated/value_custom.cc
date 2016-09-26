@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmm/value.h>
-#include <glibmm/utility.h>
+#include <value.h>
+#include <utility.h>
 #include <glib.h>
 
 

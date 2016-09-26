@@ -1,6 +1,6 @@
 // This is a generated file, do not edit.  Generated from variant_basictypes.cc.m4
 
-#include <glibmm/variant.h>
+#include <variant.h>
 
 namespace ltw8
 {

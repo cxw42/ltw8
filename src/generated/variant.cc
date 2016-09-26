@@ -3,8 +3,8 @@
 
 #include <glibmm.h>
 
-#include <glibmm/variant.h>
-#include <glibmm/private/variant_p.h>
+#include <variant.h>
+#include <private/variant_p.h>
 
 
 /* Copyright 2010 The glibmm Development Team
@@ -24,8 +24,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmm/variant.h>
-#include <glibmm/utility.h>
+#include <variant.h>
+#include <utility.h>
 #include <glib.h>
 #include <iostream>
 

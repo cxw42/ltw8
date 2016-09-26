@@ -3,8 +3,8 @@
 
 #include <glibmm.h>
 
-#include <glibmm/convert.h>
-#include <glibmm/private/convert_p.h>
+#include <convert.h>
+#include <private/convert_p.h>
 
 
 // -*- c++ -*-
@@ -30,7 +30,7 @@
 //#include <glib/gmessages.h> //For g_assert() in glib < 2.15.0
 #include <glib.h> //For g_assert() in all versions of glib.
 
-#include <glibmm/utility.h>
+#include <utility.h>
 
 
 namespace ltw8

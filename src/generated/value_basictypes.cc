@@ -4,7 +4,7 @@
 #undef G_DISABLE_DEPRECATED
 #define GLIB_DISABLE_DEPRECATION_WARNINGS 1
 
-#include <glibmm/value.h>
+#include <value.h>
 
 namespace ltw8
 {

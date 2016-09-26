@@ -19,7 +19,7 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmm/utility.h>
+#include <utility.h>
 
 
 void ltw8::append_canonical_typename(std::string& dest, const char* type_name)

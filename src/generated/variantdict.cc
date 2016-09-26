@@ -3,8 +3,8 @@
 
 #include <glibmm.h>
 
-#include <glibmm/variantdict.h>
-#include <glibmm/private/variantdict_p.h>
+#include <variantdict.h>
+#include <private/variantdict_p.h>
 
 
 /*

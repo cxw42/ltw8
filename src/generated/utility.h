@@ -18,8 +18,8 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-//#include <glibmmconfig.h>
-#include <ustring.h>
+////////#include <glibmmconfig.h>
+#include "ltw8_ustring.h"
 #include <glib.h>
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

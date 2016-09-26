@@ -27,7 +27,7 @@
 #endif
 #endif
 
-//#include <glibmmconfig.h>
+////////#include <glibmmconfig.h>
 #include <new>
 #include <typeinfo>
 

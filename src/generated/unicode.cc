@@ -3,8 +3,8 @@
 
 #include <glibmm.h>
 
-#include <glibmm/unicode.h>
-#include <glibmm/private/unicode_p.h>
+#include "ltw8_unicode.h"
+#include <private/unicode_p.h>
 
 
 /* Copyright (C) 2002 The gtkmm Development Team
@@ -24,7 +24,7 @@
  * Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include <glibmm/unicode.h>
+#include "ltw8_unicode.h"
 
 
 namespace

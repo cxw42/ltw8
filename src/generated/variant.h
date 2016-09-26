@@ -22,11 +22,11 @@
  */
 
 
-//#include <glibmmconfig.h>
+////////#include <glibmmconfig.h>
 #include <varianttype.h>
 #include <variantiter.h>
 #include <refptr.h>
-#include <ustring.h>
+#include "ltw8_ustring.h"
 #include <error.h>
 #include <utility>
 #include <vector>
